@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEIVERSE - Autonomous Product Engineering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'electric-cyan': '#22d3ee',
+                        'electric-blue': '#0ea5e9',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .terminal-code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .noise-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-white font-inter">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-electric-cyan">DEIVERSE</div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#product" class="text-gray-300 hover:text-electric-cyan transition-colors duration-200">Product</a>
+                        <a href="#features" class="text-gray-300 hover:text-electric-cyan transition-colors duration-200">Features</a>
+                        <a href="#pricing" class="text-gray-300 hover:text-electric-cyan transition-colors duration-200">Pricing</a>
+                        <a href="#about" class="text-gray-300 hover:text-electric-cyan transition-colors duration-200">About</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-300 hover:text-electric-cyan transition-colors duration-200 border border-gray-700 hover:border-electric-cyan px-4 py-2 rounded-lg">
+                        Log In
+                    </button>
+                    <button class="bg-electric-cyan text-gray-950 hover:bg-cyan-400 hover:shadow-lg transition-all duration-200 px-6 py-2 rounded-lg font-semibold">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">
+                    Autonomous<br>
+                    <span class="text-electric-cyan">Product Engine</span><br>
+                    for Elite Teams
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+                    Accelerate software delivery with DEIVERSE, the platform that automates your build, deployment, and scaling process.
+                </p>
+                <div class="mb-16 max-w-5xl mx-auto">
+                    <p class="text-lg text-gray-400 leading-relaxed">
+                        DEIVERSE is redefining how digital products are built. Our proprietary developer platform streamlines app creation, infrastructure setup, and deployment with automation-driven workflows that save time, cut cost, and scale effortlessly.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <button class="bg-electric-cyan text-gray-950 hover:bg-cyan-400 hover:shadow-lg transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
+                        Get Started
+                    </button>
+                    <button class="border border-electric-cyan text-electric-cyan hover:bg-electric-cyan hover:text-gray-950 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
+                        Explore Platform
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features Section -->
+    <section id="features" class="py-20 px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-electric-cyan text-sm font-semibold uppercase tracking-widest">The Automation Engine</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 mt-3">
+                    Proprietary Tools for Elite Engineering
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Comprehensive automation tools designed for modern development teams
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1: Automated Build & Deploy -->
+                <div class="bg-gray-900 border border-gray-800 hover:border-electric-cyan hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-electric-cyan bg-opacity-10 border border-electric-cyan rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Automated Build & Deploy</h3>
+                    <p class="text-gray-400 mb-4">Streamline your development workflow with intelligent automation that handles complex build processes and seamless deployments.</p>
+                    <div class="terminal-code bg-gray-800 text-green-400 px-3 py-2 rounded text-sm">
+                        <span class="text-gray-500">$</span> deiverse deploy --auto
+                    </div>
+                </div>
+
+                <!-- Feature 2: Infrastructure Management -->
+                <div class="bg-gray-900 border border-gray-800 hover:border-electric-cyan hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-electric-cyan bg-opacity-10 border border-electric-cyan rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Infrastructure Management</h3>
+                    <p class="text-gray-400 mb-4">Manage cloud resources effortlessly with our intelligent infrastructure orchestration and monitoring capabilities.</p>
+                    <div class="terminal-code bg-gray-800 text-green-400 px-3 py-2 rounded text-sm">
+                        <span class="text-gray-500">$</span> terraform apply --auto
+                    </div>
+                </div>
+
+                <!-- Feature 3: Code Quality Assurance -->
+                <div class="bg-gray-900 border border-gray-800 hover:border-electric-cyan hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-electric-cyan bg-opacity-10 border border-electric-cyan rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Code Quality Assurance</h3>
+                    <p class="text-gray-400 mb-4">Automated testing, linting, and code analysis ensure your codebase maintains the highest standards throughout development.</p>
+                    <div class="terminal-code bg-gray-800 text-green-400 px-3 py-2 rounded text-sm">
+                        <span class="text-gray-500">$</span> quality-check --strict
+                    </div>
+                </div>
+
+                <!-- Feature 4: Scalable Architecture -->
+                <div class="bg-gray-900 border border-gray-800 hover:border-electric-cyan hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-electric-cyan bg-opacity-10 border border-electric-cyan rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Scalable Architecture</h3>
+                    <p class="text-gray-400 mb-4">Build applications that scale automatically with our intelligent resource management and load balancing systems.</p>
+                    <div class="terminal-code bg-gray-800 text-green-400 px-3 py-2 rounded text-sm">
+                        <span class="text-gray-500">$</span> scale --auto --max=100
+                    </div>
+                </div>
+
+                <!-- Feature 5: Developer Experience -->
+                <div class="bg-gray-900 border border-gray-800 hover:border-electric-cyan hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-electric-cyan bg-opacity-10 border border-electric-cyan rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Enhanced Developer Experience</h3>
+                    <p class="text-gray-400 mb-4">Intuitive tools and comprehensive documentation that make complex development tasks simple and efficient.</p>
+                    <div class="terminal-code bg-gray-800 text-green-400 px-3 py-2 rounded text-sm">
+                        <span class="text-gray-500">$</span> docs --interactive
+                    </div>
+                </div>
+
+                <!-- Feature 6: Security & Compliance -->
+                <div class="bg-gray-900 border border-gray-800 hover:border-electric-cyan hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-electric-cyan bg-opacity-10 border border-electric-cyan rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Security & Compliance</h3>
+                    <p class="text-gray-400 mb-4">Enterprise-grade security features and compliance tools to protect your applications and data.</p>
+                    <div class="terminal-code bg-gray-800 text-green-400 px-3 py-2 rounded text-sm">
+                        <span class="text-gray-500">$</span> security-scan --compliance
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators Section -->
+    <section class="py-16 px-6 lg:px-8 bg-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-electric-cyan text-sm font-semibold uppercase tracking-widest">Trusted by Elite Teams</span>
+                <h3 class="text-2xl font-bold text-white mt-3 mb-8">
+                    Join 10,000+ developers building the future
+                </h3>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center opacity-60">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-gray-400 mb-2">Meta</div>
+                    <div class="text-sm text-gray-500">Enterprise</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-gray-400 mb-2">Adobe</div>
+                    <div class="text-sm text-gray-500">Creative</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-gray-400 mb-2">Okta</div>
+                    <div class="text-sm text-gray-500">Security</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-gray-400 mb-2">Nextdoor</div>
+                    <div class="text-sm text-gray-500">Community</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission/Vision Section -->
+    <section class="py-20 px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="border-t border-gray-800 pt-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-electric-cyan mb-6">Mission</h3>
+                        <p class="text-lg text-gray-300 leading-relaxed">
+                            To democratize software development by providing accessible, powerful automation tools that enable developers of all skill levels to build, deploy, and scale applications with unprecedented efficiency and reliability.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-electric-cyan mb-6">Vision</h3>
+                        <p class="text-lg text-gray-300 leading-relaxed">
+                            To become the go-to developer automation platform that powers the next generation of digital products, making advanced development practices accessible to teams worldwide.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-electric-cyan text-sm font-semibold uppercase tracking-widest">Subscription Model</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 mt-3">
+                    Flexible Plans for Engineered Growth
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Choose the plan that fits your development needs
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Starter Plan -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-white mb-2">Starter</h3>
+                        <div class="text-4xl font-bold text-white mb-2">Free</div>
+                        <p class="text-gray-400 mb-8">Perfect for individual developers and small projects</p>
+                        
+                        <ul class="text-left space-y-4 mb-8">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Basic automation tools</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Community support</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Up to 3 projects</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Standard documentation</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full border border-electric-cyan text-electric-cyan hover:bg-electric-cyan hover:text-gray-950 transition-all duration-200 py-3 rounded-lg font-semibold">
+                            Get Started Free
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="bg-gray-900 border-2 border-electric-cyan rounded-xl p-8 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-electric-cyan text-gray-950 px-4 py-1 rounded-full text-sm font-semibold">Most Popular</span>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-white mb-2">Pro</h3>
+                        <div class="text-4xl font-bold text-electric-cyan mb-2">£49<span class="text-lg text-gray-400">/month</span></div>
+                        <p class="text-gray-400 mb-8">Ideal for growing teams and enterprise projects</p>
+                        
+                        <ul class="text-left space-y-4 mb-8">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Advanced automation tools</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Priority support</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Unlimited projects</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Advanced analytics</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Team collaboration tools</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-electric-cyan mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-300">Custom integrations</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full bg-electric-cyan text-gray-950 hover:bg-cyan-400 hover:shadow-lg transition-all duration-200 py-3 rounded-lg font-semibold">
+                            Start Pro Trial
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials -->
+    <section class="py-20 px-6 lg:px-8 bg-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-electric-cyan text-sm font-semibold uppercase tracking-widest">Customer Success</span>
+                <h2 class="text-4xl font-bold text-white mt-3 mb-6">
+                    What Elite Teams Say About DEIVERSE
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-electric-cyan rounded-full flex items-center justify-center mr-4">
+                            <span class="text-gray-950 font-bold text-lg">JW</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white">James Wilson</div>
+                            <div class="text-sm text-gray-400">VP Engineering, TechCorp</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"DEIVERSE reduced our deployment time from 2 hours to 10 minutes. The automation is incredible."</p>
+                </div>
+                
+                <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-electric-cyan rounded-full flex items-center justify-center mr-4">
+                            <span class="text-gray-950 font-bold text-lg">SM</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white">Sarah Martinez</div>
+                            <div class="text-sm text-gray-400">CTO, StartupXYZ</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"The infrastructure automation saved us months of DevOps work. DEIVERSE is a game-changer."</p>
+                </div>
+                
+                <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-electric-cyan rounded-full flex items-center justify-center mr-4">
+                            <span class="text-gray-950 font-bold text-lg">AR</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white">Alex Rodriguez</div>
+                            <div class="text-sm text-gray-400">Lead Developer, EnterpriseCo</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"Finally, a platform that understands modern development workflows. Highly recommended."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-800 py-12 px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="text-2xl font-bold text-electric-cyan mb-4">DEIVERSE</div>
+                    <p class="text-gray-400 mb-4">
+                        Building the future of product development through automation.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Contact</h4>
+                    <p class="text-gray-400 mb-2">contact@deiverse.com</p>
+                    <p class="text-gray-400">Leeds, United Kingdom</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Resources</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-gray-400 hover:text-electric-cyan transition-colors duration-200">Documentation</a>
+                        <a href="#" class="block text-gray-400 hover:text-electric-cyan transition-colors duration-200">API Reference</a>
+                        <a href="#" class="block text-gray-400 hover:text-electric-cyan transition-colors duration-200">Support</a>
+                        <a href="#" class="block text-gray-400 hover:text-electric-cyan transition-colors duration-200">Community</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 DEIVERSE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for navbar scroll effect -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('backdrop-blur-sm', 'bg-gray-950', 'bg-opacity-80');
+            } else {
+                navbar.classList.remove('backdrop-blur-sm', 'bg-gray-950', 'bg-opacity-80');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
