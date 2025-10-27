@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - DEIVERSE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        'indigo': '#0F3B8C',
+                        'slate': '#2E3440',
+                        'steel': '#97A0B3',
+                        'off-white': '#F7F8FA',
+                        'charcoal': '#0B0C0E',
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'slide-in-left': 'slide-in-left 0.8s ease-out forwards',
+                        'slide-in-right': 'slide-in-right 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'slide-in-left': {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        'slide-in-right': {
+                            '0%': { opacity: '0', transform: 'translateX(30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .gradient-underline {
+            position: relative;
+        }
+        .gradient-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0F3B8C, #3B82F6);
+            transition: width 0.3s ease;
+        }
+        .gradient-underline:hover::after {
+            width: 100%;
+        }
+        .card-hover {
+            transition: all 0.2s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(16, 22, 33, 0.15);
+        }
+        .blog-card {
+            transition: all 0.3s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(16, 22, 33, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-off-white text-slate antialiased">
+    <!-- Global Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="premium-index.html" class="text-xl font-bold text-indigo">DEIVERSE</a>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="product.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Product</a>
+                    <a href="features.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Features</a>
+                    <a href="pricing.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Pricing</a>
+                    <a href="docs.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Docs</a>
+                    <a href="blog.html" class="text-indigo font-medium gradient-underline">Blog</a>
+                    <a href="enterprise.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Enterprise</a>
+                </nav>
+                
+                <!-- CTA Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-indigo transition-colors duration-200 p-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </button>
+                    <button class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-6 py-2 rounded-lg font-semibold">
+                        Try for free
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 px-4 sm:px-6 lg:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate mb-6 leading-tight">
+                    DEIVERSE<br>
+                    <span class="text-indigo">Blog</span>
+                </h1>
+                <p class="text-xl text-steel mb-8 leading-relaxed max-w-3xl mx-auto">
+                    Insights, tutorials, and updates from the world of developer automation
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative">
+                        <input type="text" placeholder="Search articles..." class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo">
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Article -->
+    <section class="py-20 px-4 sm:px-6 lg:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-card-light rounded-2xl p-8 mb-16">
+                <div class="grid lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="text-sm text-indigo font-semibold mb-4">FEATURED ARTICLE</div>
+                        <h2 class="text-3xl font-bold text-slate mb-4">
+                            The Future of Developer Automation: How AI is Transforming CI/CD
+                        </h2>
+                        <p class="text-lg text-steel mb-6">
+                            Explore how artificial intelligence is revolutionizing continuous integration and deployment, making development workflows faster, smarter, and more reliable than ever before.
+                        </p>
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="w-10 h-10 bg-indigo rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">AM</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-slate">Akinola Moses</div>
+                                <div class="text-sm text-steel">Dec 15, 2024 • 8 min read</div>
+                            </div>
+                        </div>
+                        <button class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-6 py-3 rounded-lg font-semibold">
+                            Read Article
+                        </button>
+                    </div>
+                    <div class="bg-gray-100 rounded-xl h-64 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                            <div class="text-gray-500">Featured Article Image</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Categories -->
+    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-4">
+                    Latest Articles
+                </h2>
+                <p class="text-xl text-steel">
+                    Stay updated with the latest trends and insights in developer automation
+                </p>
+            </div>
+            
+            <!-- Category Filter -->
+            <div class="flex flex-wrap justify-center mb-12">
+                <button class="px-6 py-3 bg-indigo text-white rounded-lg font-semibold mr-4 mb-4">All</button>
+                <button class="px-6 py-3 bg-white text-gray-700 hover:bg-gray-50 rounded-lg font-semibold mr-4 mb-4">Tutorials</button>
+                <button class="px-6 py-3 bg-white text-gray-700 hover:bg-gray-50 rounded-lg font-semibold mr-4 mb-4">Product Updates</button>
+                <button class="px-6 py-3 bg-white text-gray-700 hover:bg-gray-50 rounded-lg font-semibold mr-4 mb-4">Industry Insights</button>
+                <button class="px-6 py-3 bg-white text-gray-700 hover:bg-gray-50 rounded-lg font-semibold mr-4 mb-4">Case Studies</button>
+            </div>
+            
+            <!-- Blog Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <article class="glass-card-light rounded-xl p-6 blog-card">
+                    <div class="bg-gray-100 rounded-lg h-48 flex items-center justify-center mb-4">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            <div class="text-gray-500 text-sm">Article Image</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-indigo font-semibold mb-2">TUTORIAL</div>
+                    <h3 class="text-xl font-semibold text-slate mb-3">
+                        Building a Full-Stack App with DEIVERSE in 30 Minutes
+                    </h3>
+                    <p class="text-steel mb-4">
+                        Learn how to create a complete React + Node.js application with automated deployment using DEIVERSE.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
+                                <span class="text-white text-xs font-bold">SM</span>
+                            </div>
+                            <span class="text-sm text-steel">Sarah Martinez</span>
+                        </div>
+                        <span class="text-sm text-steel">Dec 12, 2024</span>
+                    </div>
+                </article>
+                
+                <!-- Article 2 -->
+                <article class="glass-card-light rounded-xl p-6 blog-card">
+                    <div class="bg-gray-100 rounded-lg h-48 flex items-center justify-center mb-4">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <div class="text-gray-500 text-sm">Article Image</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-indigo font-semibold mb-2">PRODUCT UPDATE</div>
+                    <h3 class="text-xl font-semibold text-slate mb-3">
+                        DEIVERSE v3.1: Enhanced Security and Performance
+                    </h3>
+                    <p class="text-steel mb-4">
+                        Discover the latest features in DEIVERSE v3.1, including improved security scanning and faster build times.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
+                                <span class="text-white text-xs font-bold">JW</span>
+                            </div>
+                            <span class="text-sm text-steel">James Wilson</span>
+                        </div>
+                        <span class="text-sm text-steel">Dec 10, 2024</span>
+                    </div>
+                </article>
+                
+                <!-- Article 3 -->
+                <article class="glass-card-light rounded-xl p-6 blog-card">
+                    <div class="bg-gray-100 rounded-lg h-48 flex items-center justify-center mb-4">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <div class="text-gray-500 text-sm">Article Image</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-indigo font-semibold mb-2">INDUSTRY INSIGHTS</div>
+                    <h3 class="text-xl font-semibold text-slate mb-3">
+                        The State of DevOps in 2024: Key Trends and Predictions
+                    </h3>
+                    <p class="text-steel mb-4">
+                        An analysis of current DevOps trends and predictions for the future of software development.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
+                                <span class="text-white text-xs font-bold">AR</span>
+                            </div>
+                            <span class="text-sm text-steel">Alex Rodriguez</span>
+                        </div>
+                        <span class="text-sm text-steel">Dec 8, 2024</span>
+                    </div>
+                </article>
+                
+                <!-- Article 4 -->
+                <article class="glass-card-light rounded-xl p-6 blog-card">
+                    <div class="bg-gray-100 rounded-lg h-48 flex items-center justify-center mb-4">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <div class="text-gray-500 text-sm">Article Image</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-indigo font-semibold mb-2">CASE STUDY</div>
+                    <h3 class="text-xl font-semibold text-slate mb-3">
+                        How TechCorp Reduced Deployment Time by 90%
+                    </h3>
+                    <p class="text-steel mb-4">
+                        A detailed case study of how TechCorp implemented DEIVERSE to dramatically improve their deployment process.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
+                                <span class="text-white text-xs font-bold">LT</span>
+                            </div>
+                            <span class="text-sm text-steel">Lisa Thompson</span>
+                        </div>
+                        <span class="text-sm text-steel">Dec 5, 2024</span>
+                    </div>
+                </article>
+                
+                <!-- Article 5 -->
+                <article class="glass-card-light rounded-xl p-6 blog-card">
+                    <div class="bg-gray-100 rounded-lg h-48 flex items-center justify-center mb-4">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                            <div class="text-gray-500 text-sm">Article Image</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-indigo font-semibold mb-2">TUTORIAL</div>
+                    <h3 class="text-xl font-semibold text-slate mb-3">
+                        Setting Up CI/CD Pipelines for Microservices
+                    </h3>
+                    <p class="text-steel mb-4">
+                        A comprehensive guide to implementing CI/CD for microservices architecture using DEIVERSE.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
+                                <span class="text-white text-xs font-bold">MC</span>
+                            </div>
+                            <span class="text-sm text-steel">Mike Chen</span>
+                        </div>
+                        <span class="text-sm text-steel">Dec 3, 2024</span>
+                    </div>
+                </article>
+                
+                <!-- Article 6 -->
+                <article class="glass-card-light rounded-xl p-6 blog-card">
+                    <div class="bg-gray-100 rounded-lg h-48 flex items-center justify-center mb-4">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.01 12.01 0 002 15c0 5.423 3.868 9.943 9 10.956.126.025.253.044.382.044s.256-.019.382-.044c5.132-1.013 9-5.533 9-10.956a12.01 12.01 0 00-1.382-6.956z"></path>
+                            </svg>
+                            <div class="text-gray-500 text-sm">Article Image</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-indigo font-semibold mb-2">INDUSTRY INSIGHTS</div>
+                    <h3 class="text-xl font-semibold text-slate mb-3">
+                        Security Best Practices for Automated Deployments
+                    </h3>
+                    <p class="text-steel mb-4">
+                        Essential security considerations when implementing automated deployment pipelines in production environments.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
+                                <span class="text-white text-xs font-bold">EK</span>
+                            </div>
+                            <span class="text-sm text-steel">Emma Kim</span>
+                        </div>
+                        <span class="text-sm text-steel">Dec 1, 2024</span>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-8 py-3 rounded-lg font-semibold">
+                    Load More Articles
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="py-20 px-4 sm:px-6 lg:px-16">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="glass-card-light rounded-2xl p-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-6">
+                    Stay Updated
+                </h2>
+                <p class="text-xl text-steel mb-8">
+                    Get the latest articles, product updates, and industry insights delivered to your inbox.
+                </p>
+                
+                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo">
+                    <button type="submit" class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-6 py-3 rounded-lg font-semibold">
+                        Subscribe
+                    </button>
+                </form>
+                
+                <p class="text-sm text-steel mt-4">
+                    No spam, unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate text-white py-16 px-4 sm:px-6 lg:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-xl font-bold text-indigo mb-4">DEIVERSE</div>
+                    <p class="text-steel text-sm mb-4">
+                        Build, validate, and ship production code — faster, safer.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Product</h4>
+                    <div class="space-y-2">
+                        <a href="product.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Product</a>
+                        <a href="features.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Features</a>
+                        <a href="pricing.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Pricing</a>
+                        <a href="docs.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Documentation</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Resources</h4>
+                    <div class="space-y-2">
+                        <a href="blog.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Blog</a>
+                        <a href="#" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Support</a>
+                        <a href="#" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Community</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
+                    <p class="text-steel text-sm mb-2">contact@deiverse.com</p>
+                    <p class="text-steel text-sm">Leeds, United Kingdom</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-steel text-sm">&copy; 2024 DEIVERSE Internet Services, Inc. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Category filter functionality
+        const categoryButtons = document.querySelectorAll('section button');
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('bg-indigo', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-700', 'hover:bg-gray-50');
+                });
+                
+                // Add active class to clicked button
+                this.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-50');
+                this.classList.add('bg-indigo', 'text-white');
+                
+                // Filter articles based on category
+                const category = this.textContent.trim();
+                const articles = document.querySelectorAll('article');
+                
+                articles.forEach(article => {
+                    const articleCategory = article.querySelector('.text-sm').textContent.trim();
+                    if (category === 'All' || articleCategory.includes(category.toUpperCase())) {
+                        article.style.display = 'block';
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const articles = document.querySelectorAll('article');
+            
+            articles.forEach(article => {
+                const content = article.textContent.toLowerCase();
+                if (content.includes(query) || query === '') {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        });
+
+        // Newsletter signup
+        const newsletterForm = document.querySelector('form');
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing! You\'ll receive our latest updates soon.');
+            this.reset();
+        });
+
+        // Load more functionality
+        const loadMoreButton = document.querySelector('button:last-of-type');
+        loadMoreButton.addEventListener('click', function() {
+            alert('More articles loading... This would typically load additional blog posts from a CMS.');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // CTA Button functionality
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.textContent.trim();
+                if (text.includes('Try') || text.includes('Free')) {
+                    window.location.href = 'pricing.html';
+                } else if (text.includes('Read Article')) {
+                    alert('Article reading functionality would open the full blog post.');
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.blog-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

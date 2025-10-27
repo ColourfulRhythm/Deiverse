@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - DEIVERSE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        'indigo': '#0F3B8C',
+                        'slate': '#2E3440',
+                        'steel': '#97A0B3',
+                        'off-white': '#F7F8FA',
+                        'charcoal': '#0B0C0E',
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'slide-in-left': 'slide-in-left 0.8s ease-out forwards',
+                        'slide-in-right': 'slide-in-right 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'slide-in-left': {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        'slide-in-right': {
+                            '0%': { opacity: '0', transform: 'translateX(30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .gradient-underline {
+            position: relative;
+        }
+        .gradient-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0F3B8C, #3B82F6);
+            transition: width 0.3s ease;
+        }
+        .gradient-underline:hover::after {
+            width: 100%;
+        }
+        .device-frame {
+            border: 12px solid #2E3440;
+            border-radius: 16px;
+            background: #0B0C0E;
+            padding: 8px;
+        }
+        .card-hover {
+            transition: all 0.2s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(16, 22, 33, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-off-white text-slate antialiased">
+    <!-- Global Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="premium-index.html" class="text-xl font-bold text-indigo">DEIVERSE</a>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="product.html" class="text-indigo font-medium gradient-underline">Product</a>
+                    <a href="features.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Features</a>
+                    <a href="pricing.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Pricing</a>
+                    <a href="docs.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Docs</a>
+                    <a href="blog.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Blog</a>
+                    <a href="enterprise.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Enterprise</a>
+                </nav>
+                
+                <!-- CTA Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-indigo transition-colors duration-200 p-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </button>
+                    <button class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-6 py-2 rounded-lg font-semibold">
+                        Try for free
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 px-4 sm:px-6 lg:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate mb-6 leading-tight">
+                    The complete developer<br>
+                    <span class="text-indigo">automation platform</span>
+                </h1>
+                <p class="text-xl text-steel mb-8 leading-relaxed max-w-3xl mx-auto">
+                    From code generation to production deployment, DEIVERSE handles every step of your development workflow with intelligent automation.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Overview -->
+    <section class="py-20 px-4 sm:px-6 lg:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+                <div class="animate-slide-in-left">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-6">
+                        Autonomous Product Engineering
+                    </h2>
+                    <p class="text-xl text-steel mb-8">
+                        DEIVERSE is redefining how digital products are built. Our proprietary developer platform streamlines app creation, infrastructure setup, and deployment with automation-driven workflows.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate mb-2">Code Scaffold Generator</h3>
+                                <p class="text-steel">Instantly generate secure React, Node.js, and Python templates with built-in testing frameworks and best practices.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate mb-2">Configurable CI/CD Engine</h3>
+                                <p class="text-steel">Auto-generate pipeline YAML for GitHub Actions, GitLab, or Azure DevOps with intelligent optimization.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate mb-2">Infrastructure-as-Code</h3>
+                                <p class="text-steel">Provision AWS, Azure, or GCP environments using Terraform templates with security best practices.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-slide-in-right">
+                    <div class="device-frame">
+                        <div class="bg-charcoal rounded-lg p-6 h-96">
+                            <div class="text-sm font-mono text-gray-400 mb-4">DEIVERSE Platform Dashboard</div>
+                            <div class="space-y-4">
+                                <div class="bg-gray-800 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-green-400 font-mono text-sm">Code Generation</span>
+                                        <span class="text-xs text-gray-500">Active</span>
+                                    </div>
+                                    <div class="w-full bg-gray-700 rounded-full h-2">
+                                        <div class="bg-indigo h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-800 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-green-400 font-mono text-sm">CI/CD Pipeline</span>
+                                        <span class="text-xs text-gray-500">Running</span>
+                                    </div>
+                                    <div class="w-full bg-gray-700 rounded-full h-2">
+                                        <div class="bg-indigo h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-800 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-green-400 font-mono text-sm">Infrastructure</span>
+                                        <span class="text-xs text-gray-500">Provisioned</span>
+                                    </div>
+                                    <div class="w-full bg-gray-700 rounded-full h-2">
+                                        <div class="bg-indigo h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Deep Dive -->
+    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-4">
+                    How DEIVERSE Works
+                </h2>
+                <p class="text-xl text-steel max-w-3xl mx-auto">
+                    A step-by-step look at our automation workflow
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="glass-card-light rounded-xl p-8 text-center card-hover">
+                    <div class="w-16 h-16 bg-indigo rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate mb-4">Connect Repository</h3>
+                    <p class="text-steel">Connect your GitHub, GitLab, or Bitbucket repository to DEIVERSE with a single click.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="glass-card-light rounded-xl p-8 text-center card-hover">
+                    <div class="w-16 h-16 bg-indigo rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate mb-4">Auto-Configure</h3>
+                    <p class="text-steel">DEIVERSE analyzes your codebase and automatically generates CI/CD pipelines, infrastructure, and deployment configs.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="glass-card-light rounded-xl p-8 text-center card-hover">
+                    <div class="w-16 h-16 bg-indigo rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate mb-4">Deploy & Scale</h3>
+                    <p class="text-steel">Your application is automatically deployed to production with monitoring, security, and scaling configured.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section class="py-20 px-4 sm:px-6 lg:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-6">
+                        Technical Specifications
+                    </h2>
+                    <p class="text-xl text-steel mb-8">
+                        Built for enterprise-grade performance and reliability
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <span class="font-semibold text-slate">Supported Languages</span>
+                            <span class="text-steel">React, Node.js, Python, Go, Java</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <span class="font-semibold text-slate">Cloud Providers</span>
+                            <span class="text-steel">AWS, Azure, GCP, DigitalOcean</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <span class="font-semibold text-slate">CI/CD Platforms</span>
+                            <span class="text-steel">GitHub Actions, GitLab CI, Azure DevOps</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <span class="font-semibold text-slate">Infrastructure Tools</span>
+                            <span class="text-steel">Terraform, Kubernetes, Docker</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <span class="font-semibold text-slate">Monitoring</span>
+                            <span class="text-steel">Grafana, Prometheus, DataDog</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="device-frame">
+                    <div class="bg-charcoal rounded-lg p-6 h-96">
+                        <div class="text-sm font-mono text-gray-400 mb-4">System Architecture</div>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                <span class="text-xs font-mono text-gray-400">Load Balancer</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-indigo rounded-full"></div>
+                                <span class="text-xs font-mono text-gray-400">Application Servers</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <span class="text-xs font-mono text-gray-400">Database Cluster</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <span class="text-xs font-mono text-gray-400">Cache Layer</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+                                <span class="text-xs font-mono text-gray-400">Monitoring Stack</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-gray-50">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-6">
+                Ready to automate your development workflow?
+            </h2>
+            <p class="text-xl text-steel mb-8">
+                Start building with DEIVERSE today and see the difference intelligent automation can make.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-indigo text-white hover:bg-blue-800 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
+                    Try DEIVERSE Free
+                </button>
+                <button class="border border-gray-300 text-gray-700 hover:border-indigo hover:text-indigo transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
+                    Schedule Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate text-white py-16 px-4 sm:px-6 lg:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-xl font-bold text-indigo mb-4">DEIVERSE</div>
+                    <p class="text-steel text-sm mb-4">
+                        Build, validate, and ship production code — faster, safer.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Product</h4>
+                    <div class="space-y-2">
+                        <a href="product.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Product</a>
+                        <a href="features.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Features</a>
+                        <a href="pricing.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Pricing</a>
+                        <a href="docs.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Documentation</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Resources</h4>
+                    <div class="space-y-2">
+                        <a href="blog.html" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Blog</a>
+                        <a href="#" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Support</a>
+                        <a href="#" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Community</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
+                    <p class="text-steel text-sm mb-2">contact@deiverse.com</p>
+                    <p class="text-steel text-sm">Leeds, United Kingdom</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-steel text-sm">&copy; 2024 DEIVERSE Internet Services, Inc. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.card-hover').forEach(el => {
+            observer.observe(el);
+        });
+
+        // CTA Button functionality
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.textContent.trim();
+                if (text.includes('Try') || text.includes('Free')) {
+                    // Redirect to signup or show signup modal
+                    window.location.href = 'pricing.html';
+                } else if (text.includes('Demo')) {
+                    // Show demo modal or redirect to demo page
+                    alert('Demo scheduling coming soon! Contact us at contact@deiverse.com');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
