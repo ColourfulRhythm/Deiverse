@@ -476,21 +476,38 @@ deiverse infra generate --provider azure --region eastus --database mysql
     </script>
 </body>
     <script>
-        // CTA handlers (mailto links)
-        (function attachDocsCtaHandlers() {
-            const encode = encodeURIComponent;
-            const tryHref = `mailto:contact@deiverse.com?subject=${encode('Try DEIVERSE Free')}&body=${encode("Hi DEIVERSE team,\n\nI'd like to start a free trial.\n\nName: \nCompany: \nUse case: \n")}`;
-            const demoHref = `mailto:contact@deiverse.com?subject=${encode('Schedule a demo')}&body=${encode("Hi DEIVERSE team,\n\nI'd like to schedule a demo.\n\nPreferred times: \nTimezone: \nTeam size: \n")}`;
+        // CTA form modal
+        (function setupCtaForm() {
+            const modal = document.createElement('div');
+            modal.id = 'cta-modal';
+            modal.innerHTML = `
+<div id=\"cta-overlay\" style=\"position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:10000;\">\n  <div style=\"background:#fff;max-width:520px;width:92%;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,0.25);overflow:hidden;\">\n    <div style=\"padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;\">\n      <h3 id=\"cta-title\" style=\"margin:0;font-size:18px;font-weight:700;color:#111827\">Get Started</h3>\n      <button id=\"cta-close\" aria-label=\"Close\" style=\"background:transparent;border:0;font-size:20px;line-height:1;cursor:pointer;color:#6b7280\">×</button>\n    </div>\n    <form id=\"cta-form\" action=\"https://formsubmit.co/contact@deiverse.com\" method=\"POST\" style=\"padding:20px;\">\n      <input type=\"hidden\" name=\"_subject\" id=\"cta-subject\" value=\"DEIVERSE Inquiry\"/>\n      <input type=\"hidden\" name=\"context\" id=\"cta-context\" value=\"\"/>\n      <input type=\"hidden\" name=\"_template\" value=\"table\"/>\n      <input type=\"hidden\" name=\"_captcha\" value=\"false\"/>\n      <div style=\"display:grid;gap:12px;\">\n        <label style=\"display:grid;gap:6px;font-size:14px;color:#374151\">\n          Name\n          <input name=\"name\" required placeholder=\"Your name\" style=\"padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;\" />\n        </label>\n        <label style=\"display:grid;gap:6px;font-size:14px;color:#374151\">\n          Email\n          <input type=\"email\" name=\"email\" required placeholder=\"you@company.com\" style=\"padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;\" />\n        </label>\n        <label style=\"display:grid;gap:6px;font-size:14px;color:#374151\">\n          Company\n          <input name=\"company\" placeholder=\"Company name\" style=\"padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;\" />\n        </label>\n        <label style=\"display:grid;gap:6px;font-size:14px;color:#374151\">\n          Message\n          <textarea name=\"message\" rows=\"4\" placeholder=\"Tell us about your use case\" style=\"padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;resize:vertical;\"></textarea>\n        </label>\n        <button type=\"submit\" style=\"margin-top:4px;background:#0F3B8C;color:#fff;padding:12px 16px;border:0;border-radius:10px;font-weight:600;cursor:pointer\">Send</button>\n      </div>\n    </form>\n  </div>\n</div>`;
+            document.body.appendChild(modal);
+
+            const overlay = document.getElementById('cta-overlay');
+            const closeBtn = document.getElementById('cta-close');
+            const title = document.getElementById('cta-title');
+            const subject = document.getElementById('cta-subject');
+            const contextInput = document.getElementById('cta-context');
+
+            function open(type, originText) {
+                title.textContent = type === 'demo' ? 'Schedule a Demo' : 'Start Free Trial';
+                subject.value = type === 'demo' ? 'Schedule a demo' : 'Try DEIVERSE Free';
+                contextInput.value = `${type} • from: ${originText}`;
+                overlay.style.display = 'flex';
+            }
+            function close() { overlay.style.display = 'none'; }
+            closeBtn.addEventListener('click', close);
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
 
             const matchesTry = (text) => /try|get started/i.test(text);
             const matchesDemo = (text) => /schedule\s*demo|demo/i.test(text);
-
             document.querySelectorAll('button, a').forEach(el => {
                 const text = (el.textContent || '').trim();
                 if (matchesTry(text)) {
-                    el.addEventListener('click', (e) => { e.preventDefault(); window.location.href = tryHref; });
+                    el.addEventListener('click', (e) => { e.preventDefault(); open('trial', text); });
                 } else if (matchesDemo(text)) {
-                    el.addEventListener('click', (e) => { e.preventDefault(); window.location.href = demoHref; });
+                    el.addEventListener('click', (e) => { e.preventDefault(); open('demo', text); });
                 }
             });
         })();
