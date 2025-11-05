@@ -6,9 +6,6 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
-      { "source": "/", "destination": "/premium-index.html" }
-    ],
     "headers": [
       {
         "source": "**/*.@(css|js|png|jpg|jpeg|svg|webp|gif)",
