@@ -151,7 +151,7 @@
                 </div>
             </div>
         </div>
-    </section>
+ </section>
 
     <!-- Documentation Layout -->
     <section class="py-20 px-4 sm:px-6 lg:px-16">
@@ -475,4 +475,24 @@ deiverse infra generate --provider azure --region eastus --database mysql
         });
     </script>
 </body>
+    <script>
+        // CTA handlers (mailto links)
+        (function attachDocsCtaHandlers() {
+            const encode = encodeURIComponent;
+            const tryHref = `mailto:contact@deiverse.com?subject=${encode('Try DEIVERSE Free')}&body=${encode("Hi DEIVERSE team,\n\nI'd like to start a free trial.\n\nName: \nCompany: \nUse case: \n")}`;
+            const demoHref = `mailto:contact@deiverse.com?subject=${encode('Schedule a demo')}&body=${encode("Hi DEIVERSE team,\n\nI'd like to schedule a demo.\n\nPreferred times: \nTimezone: \nTeam size: \n")}`;
+
+            const matchesTry = (text) => /try|get started/i.test(text);
+            const matchesDemo = (text) => /schedule\s*demo|demo/i.test(text);
+
+            document.querySelectorAll('button, a').forEach(el => {
+                const text = (el.textContent || '').trim();
+                if (matchesTry(text)) {
+                    el.addEventListener('click', (e) => { e.preventDefault(); window.location.href = tryHref; });
+                } else if (matchesDemo(text)) {
+                    el.addEventListener('click', (e) => { e.preventDefault(); window.location.href = demoHref; });
+                }
+            });
+        })();
+    </script>
 </html>

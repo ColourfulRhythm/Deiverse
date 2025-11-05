@@ -670,17 +670,30 @@
             });
         });
 
-        // CTA Button functionality
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', function() {
-                const text = this.textContent.trim();
-                if (text.includes('Try') || text.includes('Free')) {
-                    window.location.href = 'pricing.html';
-                } else if (text.includes('Demo')) {
-                    alert('Demo scheduling coming soon! Contact us at contact@deiverse.com');
+        // CTA Button functionality (mailto links)
+        (function attachCtaHandlers() {
+            const encode = encodeURIComponent;
+            const tryHref = `mailto:contact@deiverse.com?subject=${encode('Try DEIVERSE Free')}&body=${encode("Hi DEIVERSE team,\n\nI'd like to start a free trial.\n\nName: \nCompany: \nUse case: \n")}`;
+            const demoHref = `mailto:contact@deiverse.com?subject=${encode('Schedule a demo')}&body=${encode("Hi DEIVERSE team,\n\nI'd like to schedule a demo.\n\nPreferred times: \nTimezone: \nTeam size: \n")}`;
+
+            const matchesTry = (text) => /try|get started/i.test(text);
+            const matchesDemo = (text) => /schedule\s*demo|demo/i.test(text);
+
+            document.querySelectorAll('button, a').forEach(el => {
+                const text = (el.textContent || '').trim();
+                if (matchesTry(text)) {
+                    el.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.location.href = tryHref;
+                    });
+                } else if (matchesDemo(text)) {
+                    el.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.location.href = demoHref;
+                    });
                 }
             });
-        });
+        })();
 
         // Intersection Observer for animations
         const observerOptions = {
