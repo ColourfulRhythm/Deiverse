@@ -488,11 +488,26 @@ deiverse infra generate --provider azure --region eastus --database mysql
             const title = document.getElementById('cta-title');
             const subject = document.getElementById('cta-subject');
             const contextInput = document.getElementById('cta-context');
+            const form = document.getElementById('cta-form');
+            const emailInput = form.querySelector('input[name="email"]');
+            const errorEl = document.getElementById('cta-error') || (() => { const s = document.createElement('span'); s.id='cta-error'; s.textContent='Please use a company email (no Gmail, Yahoo, Outlook, etc.).'; s.style.display='none'; s.style.color='#b91c1c'; s.style.fontSize='12px'; s.style.marginTop='4px'; emailInput.parentElement.appendChild(s); return s; })();
+
+            let currentType = 'trial';
+            const freeDomains = ['gmail.com','yahoo.com','yahoo.co.uk','outlook.com','outlook.co.uk','hotmail.com','live.com','msn.com','icloud.com','me.com','proton.me','protonmail.com','aol.com','mail.com','zoho.com','yandex.com','gmx.com'];
+            function isFreeDomain(email) {
+                const at = email.lastIndexOf('@');
+                if (at < 0) return true;
+                const domain = email.slice(at + 1).toLowerCase();
+                if (!domain.includes('.')) return true;
+                return freeDomains.includes(domain);
+            }
 
             function open(type, originText) {
                 title.textContent = type === 'demo' ? 'Schedule a Demo' : 'Start Free Trial';
                 subject.value = type === 'demo' ? 'Schedule a demo' : 'Try DEIVERSE Free';
                 contextInput.value = `${type} • from: ${originText}`;
+                currentType = type;
+                errorEl.style.display = 'none';
                 overlay.style.display = 'flex';
             }
             function close() { overlay.style.display = 'none'; }
@@ -507,6 +522,17 @@ deiverse infra generate --provider azure --region eastus --database mysql
                     el.addEventListener('click', (e) => { e.preventDefault(); open('trial', text); });
                 } else if (matchesDemo(text)) {
                     el.addEventListener('click', (e) => { e.preventDefault(); open('demo', text); });
+                }
+            });
+            form.addEventListener('submit', (e) => {
+                if (currentType === 'trial') {
+                    const email = (emailInput.value || '').trim();
+                    if (isFreeDomain(email)) {
+                        e.preventDefault();
+                        errorEl.style.display = 'block';
+                        emailInput.focus();
+                        return;
+                    }
                 }
             });
         })();
