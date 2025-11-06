@@ -6,6 +6,7 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "cleanUrls": true,
     "headers": [
       {
         "source": "**/*.@(css|js|png|jpg|jpeg|svg|webp|gif)",
