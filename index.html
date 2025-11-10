@@ -16,10 +16,11 @@
                     },
                     colors: {
                         'indigo': '#0F3B8C',
-                        'slate': '#2E3440',
-                        'steel': '#97A0B3',
-                        'off-white': '#F7F8FA',
-                        'charcoal': '#0B0C0E',
+                        // Semantic colors that adapt to light/dark mode
+                        'slate': 'var(--label)', // Uses semantic label for headings
+                        'steel': 'var(--secondary-label)', // Uses semantic secondary label for body text
+                        'off-white': 'var(--system-background)',
+                        'charcoal': 'var(--tertiary-system-background)',
                     },
                     backdropBlur: {
                         'xs': '2px',
@@ -53,21 +54,197 @@
         }
     </script>
     <style>
-        body { font-family: Georgia, Cambria, "Times New Roman", Times, serif; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; }
+        /**
+         * Apple-style Semantic System Colors Implementation
+         * 
+         * This implementation follows Apple's Human Interface Guidelines for background colors:
+         * - Uses dynamic, semantic system colors that automatically adapt to Light/Dark Mode
+         * - Establishes visual hierarchy through primary, secondary, and tertiary backgrounds
+         * - Ensures accessibility with proper contrast ratios and high contrast mode support
+         * - Avoids pure black/white, using subtle grays for better visual comfort
+         * - Uses color sparingly, reserving prominent colors for interactive elements
+         * 
+         * Background Hierarchy:
+         * - system-background: Primary background (white/black)
+         * - secondary-system-background: For grouped content sections
+         * - tertiary-system-background: For layered elements
+         * - system-grouped-background: For grouped views like cards
+         * 
+         * All colors automatically adapt based on prefers-color-scheme media query
+         */
+        
+        /* Apple-style Semantic System Colors - Dynamic & Adaptive */
+        :root {
+            /* Light Mode - Primary Background Hierarchy */
+            --system-background: rgb(255, 255, 255); /* Pure white for main background */
+            --secondary-system-background: rgb(242, 242, 247); /* Off-white for grouped content */
+            --tertiary-system-background: rgb(255, 255, 255); /* White for layered elements */
+            
+            /* Light Mode - Grouped Background Hierarchy */
+            --system-grouped-background: rgb(242, 242, 247); /* Light gray for grouped views */
+            --secondary-system-grouped-background: rgb(255, 255, 255); /* White for cards in groups */
+            --tertiary-system-grouped-background: rgb(242, 242, 247); /* Light gray for nested groups */
+            
+            /* Light Mode - Label Colors (Text) */
+            --label: rgb(0, 0, 0); /* Primary text */
+            --secondary-label: rgb(60, 60, 67); /* Secondary text with 60% opacity equivalent */
+            --tertiary-label: rgb(60, 60, 67); /* Tertiary text with 30% opacity equivalent */
+            
+            /* Light Mode - Separator */
+            --separator: rgba(60, 60, 67, 0.29); /* Subtle separator */
+            --opaque-separator: rgb(198, 198, 200); /* Opaque separator */
+            
+            /* Light Mode - Fill Colors */
+            --system-fill: rgba(120, 120, 128, 0.2); /* System fill */
+            --secondary-system-fill: rgba(120, 120, 128, 0.16); /* Secondary fill */
+            --tertiary-system-fill: rgba(120, 120, 128, 0.12); /* Tertiary fill */
+            
+            /* Glass effect colors for light mode */
+            --glass-background: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.06);
+            --glass-background-dark: rgba(255, 255, 255, 0.05);
+            --glass-border-dark: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dark Mode - Semantic System Colors */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark Mode - Primary Background Hierarchy */
+                --system-background: rgb(0, 0, 0); /* Pure black for primary background (allows shadows and depth) */
+                --secondary-system-background: rgb(28, 28, 30); /* Dark gray for grouped content */
+                --tertiary-system-background: rgb(44, 44, 46); /* Medium dark gray for layered elements */
+                
+                /* Dark Mode - Grouped Background Hierarchy */
+                --system-grouped-background: rgb(0, 0, 0); /* Very dark for grouped views */
+                --secondary-system-grouped-background: rgb(28, 28, 30); /* Dark gray for cards */
+                --tertiary-system-grouped-background: rgb(44, 44, 46); /* Medium dark for nested */
+                
+                /* Dark Mode - Label Colors (Text) */
+                --label: rgb(255, 255, 255); /* Primary text */
+                --secondary-label: rgb(235, 235, 245); /* Secondary text with 60% opacity equivalent */
+                --tertiary-label: rgb(235, 235, 245); /* Tertiary text with 30% opacity equivalent */
+                
+                /* Dark Mode - Separator */
+                --separator: rgba(84, 84, 88, 0.65); /* Subtle separator */
+                --opaque-separator: rgb(56, 56, 58); /* Opaque separator */
+                
+                /* Dark Mode - Fill Colors */
+                --system-fill: rgba(120, 120, 128, 0.36); /* System fill */
+                --secondary-system-fill: rgba(120, 120, 128, 0.32); /* Secondary fill */
+                --tertiary-system-fill: rgba(120, 120, 128, 0.24); /* Tertiary fill */
+                
+                /* Glass effect colors for dark mode */
+                --glass-background: rgba(28, 28, 30, 0.8);
+                --glass-border: rgba(255, 255, 255, 0.1);
+                --glass-background-dark: rgba(44, 44, 46, 0.6);
+                --glass-border-dark: rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        /* High Contrast Mode Support */
+        @media (prefers-contrast: high) {
+            :root {
+                --separator: rgba(0, 0, 0, 0.5);
+                --opaque-separator: rgb(128, 128, 128);
+            }
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --separator: rgba(255, 255, 255, 0.8);
+                    --opaque-separator: rgb(200, 200, 200);
+                }
+            }
+        }
+
+        /* Base Styles */
+        body {
+            font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+            background-color: var(--system-background);
+            color: var(--label);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', sans-serif;
+            color: var(--label);
+        }
+
+        /* Semantic Background Classes */
+        .bg-system-background {
+            background-color: var(--system-background);
+        }
+        
+        .bg-secondary-system-background {
+            background-color: var(--secondary-system-background);
+        }
+        
+        .bg-tertiary-system-background {
+            background-color: var(--tertiary-system-background);
+        }
+        
+        .bg-system-grouped-background {
+            background-color: var(--system-grouped-background);
+        }
+        
+        .bg-secondary-system-grouped-background {
+            background-color: var(--secondary-system-grouped-background);
+        }
+        
+        .bg-tertiary-system-grouped-background {
+            background-color: var(--tertiary-system-grouped-background);
+        }
+
+        /* Semantic Text Colors */
+        .text-label {
+            color: var(--label);
+        }
+        
+        .text-secondary-label {
+            color: var(--secondary-label);
+        }
+        
+        .text-tertiary-label {
+            color: var(--tertiary-label);
+            opacity: 0.5;
+        }
+
+        /* Glass Card with Semantic Colors */
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--glass-background-dark);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border-dark);
         }
+        
+        /* Glass Card Light - Uses secondary grouped background for hierarchy */
         .glass-card-light {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: var(--secondary-system-grouped-background);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--separator);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
+        
+        /* Enhanced glass effect for light mode */
+        @media (prefers-color-scheme: light) {
+            .glass-card-light {
+                background: rgba(255, 255, 255, 0.9);
+                border: 1px solid rgba(0, 0, 0, 0.08);
+            }
+        }
+        
+        /* Enhanced glass effect for dark mode */
+        @media (prefers-color-scheme: dark) {
+            .glass-card-light {
+                background: rgba(28, 28, 30, 0.9);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        /* Gradient Underline */
         .gradient-underline {
             position: relative;
         }
+        
         .gradient-underline::after {
             content: '';
             position: absolute;
@@ -78,18 +255,24 @@
             background: linear-gradient(90deg, #0F3B8C, #3B82F6);
             transition: width 0.3s ease;
         }
+        
         .gradient-underline:hover::after {
             width: 100%;
         }
+
         .pipeline-step {
             animation-delay: calc(var(--step) * 0.5s);
         }
+
+        /* Device Frame with Semantic Colors */
         .device-frame {
-            border: 12px solid #2E3440;
+            border: 12px solid var(--secondary-system-background);
             border-radius: 16px;
-            background: #0B0C0E;
+            background: var(--system-background);
             padding: 8px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
         }
+        
         .device-frame::before {
             content: '';
             position: absolute;
@@ -97,53 +280,157 @@
             left: 4px;
             right: 4px;
             bottom: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--separator);
             border-radius: 8px;
             pointer-events: none;
         }
+
+        /* Card Hover with Semantic Shadows */
         .card-hover {
             transition: all 0.2s ease;
         }
+        
         .card-hover:hover {
             transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 20px 40px rgba(16, 22, 33, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
         }
+        
+        @media (prefers-color-scheme: dark) {
+            .card-hover:hover {
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        /* Preloader with Semantic Background */
         .preloader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #F7F8FA;
+            background: var(--system-background);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, background-color 0.3s ease;
         }
+        
         .preloader.hidden {
             opacity: 0;
             pointer-events: none;
         }
+
         .loader-line {
             width: 200px;
             height: 2px;
-            background: #E5E7EB;
+            background: var(--secondary-system-fill);
             border-radius: 1px;
             overflow: hidden;
         }
+
         .loader-progress {
             height: 100%;
             background: linear-gradient(90deg, #0F3B8C, #3B82F6);
             width: 0%;
             animation: load-progress 0.4s ease-out forwards;
         }
+
         @keyframes load-progress {
             to { width: 100%; }
         }
+
+        /* Header with Semantic Background */
+        .header-background {
+            background-color: var(--system-background);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--separator);
+        }
+
+        /* Separator Utility */
+        .separator {
+            border-color: var(--separator);
+        }
+        
+        .separator-opaque {
+            border-color: var(--opaque-separator);
+        }
+
+        /* Footer with Semantic Dark Background */
+        .footer-background {
+            background-color: var(--secondary-system-background);
+            color: var(--label);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .footer-background {
+                background-color: var(--system-grouped-background);
+                color: var(--label);
+            }
+        }
+
+        /* Footer Text - Ensure proper contrast */
+        .footer-heading {
+            color: var(--label);
+        }
+        
+        .footer-text {
+            color: var(--secondary-label);
+        }
+
+        /* Telemetry Section with Semantic Background */
+        .telemetry-background {
+            background-color: var(--secondary-system-background);
+            color: var(--label);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .telemetry-background {
+                background-color: var(--tertiary-system-background);
+            }
+        }
+
+        /* Device Frame Inner Content - Terminal Style */
+        .device-content {
+            background-color: var(--tertiary-system-background);
+            color: var(--label);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .device-content {
+                background-color: rgb(18, 18, 18); /* Slightly lighter than pure black for terminal aesthetic */
+            }
+        }
+
+        /* Terminal/Code Block Backgrounds */
+        .terminal-bg {
+            background-color: var(--tertiary-system-background);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .terminal-bg {
+                background-color: rgb(24, 24, 24);
+            }
+        }
+
+        .terminal-item-bg {
+            background-color: var(--secondary-system-fill);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .terminal-item-bg {
+                background-color: rgb(44, 44, 46);
+            }
+        }
+
+        /* Progress Bar Background */
+        .progress-bar-bg {
+            background-color: var(--secondary-system-fill);
+        }
     </style>
 </head>
-<body class="bg-off-white text-slate antialiased">
+<body class="bg-system-background text-label antialiased">
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="text-center">
@@ -155,7 +442,7 @@
     </div>
 
     <!-- Global Header -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+    <header class="sticky top-0 z-50 header-background">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
@@ -165,17 +452,17 @@
                 
                 <!-- Navigation -->
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="product.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Product</a>
-                    <a href="features.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Features</a>
-                    <a href="pricing.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Pricing</a>
-                    <a href="docs.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Docs</a>
-                    <a href="blog.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Blog</a>
-                    <a href="enterprise.html" class="text-gray-600 hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Enterprise</a>
+                    <a href="product.html" class="text-secondary-label hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Product</a>
+                    <a href="features.html" class="text-secondary-label hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Features</a>
+                    <a href="pricing.html" class="text-secondary-label hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Pricing</a>
+                    <a href="docs.html" class="text-secondary-label hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Docs</a>
+                    <a href="blog.html" class="text-secondary-label hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Blog</a>
+                    <a href="enterprise.html" class="text-secondary-label hover:text-indigo transition-colors duration-200 font-medium gradient-underline">Enterprise</a>
                 </nav>
                 
                 <!-- CTA Buttons -->
                 <div class="flex items-center space-x-4">
-                    <button class="text-gray-600 hover:text-indigo transition-colors duration-200 p-2">
+                    <button class="text-secondary-label hover:text-indigo transition-colors duration-200 p-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
@@ -202,7 +489,7 @@
                     <p class="text-xl text-steel mb-8 leading-relaxed max-w-2xl">
                         Accelerate software delivery with DEIVERSE — the platform that automates your build, deployment, and scaling process.
                     </p>
-                    <p class="text-lg text-gray-600 mb-10 leading-relaxed max-w-2xl">
+                    <p class="text-lg text-secondary-label mb-10 leading-relaxed max-w-2xl">
                         DEIVERSE is redefining how digital products are built. Our proprietary developer platform streamlines app creation, infrastructure setup, and deployment with automation-driven workflows that save time, cut cost, and scale effortlessly.
                     </p>
                     
@@ -211,7 +498,7 @@
                         <button class="bg-indigo text-white hover:bg-blue-800 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl">
                             Try for free
                         </button>
-                        <button class="border border-gray-300 text-gray-700 hover:border-indigo hover:text-indigo transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
+                        <button class="border separator text-secondary-label hover:border-indigo hover:text-indigo transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
                             Watch demo
                         </button>
                         <button class="text-indigo hover:text-blue-800 transition-colors duration-200 px-8 py-4 font-semibold text-lg">
@@ -223,12 +510,12 @@
                 <!-- Right Column: Visual -->
                 <div class="animate-slide-in-right">
                     <div class="device-frame relative">
-                        <div class="bg-charcoal rounded-lg p-6 h-96 overflow-hidden">
+                        <div class="device-content rounded-lg p-6 h-96 overflow-hidden">
                             <!-- Terminal Header -->
-                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-700">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b separator">
                                 <div class="flex items-center space-x-2">
                                     <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                    <span class="text-sm font-mono text-gray-400">DEIVERSE CLI v3.1.0</span>
+                                    <span class="text-sm font-mono text-secondary-label">DEIVERSE CLI v3.1.0</span>
                                 </div>
                                 <span class="text-xs font-mono text-indigo">Status: Live</span>
                             </div>
@@ -239,39 +526,39 @@
                                     <div class="w-8 h-8 bg-indigo rounded-full flex items-center justify-center">
                                         <span class="text-white text-xs font-bold">1</span>
                                     </div>
-                                    <div class="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="flex-1 h-2 progress-bar-bg rounded-full overflow-hidden">
                                         <div class="h-full bg-indigo rounded-full animate-pipeline-flow"></div>
                                     </div>
-                                    <span class="text-sm font-mono text-gray-400">Build</span>
+                                    <span class="text-sm font-mono text-secondary-label">Build</span>
                                 </div>
                                 
                                 <div class="flex items-center space-x-4">
                                     <div class="w-8 h-8 bg-indigo rounded-full flex items-center justify-center">
                                         <span class="text-white text-xs font-bold">2</span>
                                     </div>
-                                    <div class="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="flex-1 h-2 progress-bar-bg rounded-full overflow-hidden">
                                         <div class="h-full bg-indigo rounded-full animate-pipeline-flow" style="animation-delay: 0.5s;"></div>
                                     </div>
-                                    <span class="text-sm font-mono text-gray-400">Test</span>
+                                    <span class="text-sm font-mono text-secondary-label">Test</span>
                                 </div>
                                 
                                 <div class="flex items-center space-x-4">
                                     <div class="w-8 h-8 bg-indigo rounded-full flex items-center justify-center">
                                         <span class="text-white text-xs font-bold">3</span>
                                     </div>
-                                    <div class="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="flex-1 h-2 progress-bar-bg rounded-full overflow-hidden">
                                         <div class="h-full bg-indigo rounded-full animate-pipeline-flow" style="animation-delay: 1s;"></div>
                                     </div>
-                                    <span class="text-sm font-mono text-gray-400">Deploy</span>
+                                    <span class="text-sm font-mono text-secondary-label">Deploy</span>
                                 </div>
                             </div>
                             
                             <!-- Code Snippet -->
-                            <div class="mt-6 bg-gray-800 rounded-lg p-4">
+                            <div class="mt-6 terminal-item-bg rounded-lg p-4">
                                 <div class="text-xs font-mono text-green-400 space-y-1">
-                                    <div><span class="text-gray-500">$</span> deiverse deploy --auto</div>
-                                    <div class="text-gray-400">✓ Build completed (2.3s)</div>
-                                    <div class="text-gray-400">✓ Tests passed (47/47)</div>
+                                    <div><span class="text-tertiary-label">$</span> deiverse deploy --auto</div>
+                                    <div class="text-secondary-label">✓ Build completed (2.3s)</div>
+                                    <div class="text-secondary-label">✓ Tests passed (47/47)</div>
                                     <div class="text-indigo">✓ Deployed to production</div>
                                 </div>
                             </div>
@@ -283,14 +570,14 @@
     </section>
 
     <!-- Trust Strip -->
-    <section class="py-12 px-4 sm:px-6 lg:px-16 bg-gray-50">
+    <section class="py-12 px-4 sm:px-6 lg:px-16 bg-secondary-system-background">
         <div class="max-w-7xl mx-auto text-center">
             <p class="text-sm text-steel mb-8">Trusted by engineering teams at scale</p>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center opacity-60">
-                <div class="text-2xl font-bold text-gray-400">Meta</div>
-                <div class="text-2xl font-bold text-gray-400">Adobe</div>
-                <div class="text-2xl font-bold text-gray-400">Okta</div>
-                <div class="text-2xl font-bold text-gray-400">Nextdoor</div>
+                <div class="text-2xl font-bold text-tertiary-label">Meta</div>
+                <div class="text-2xl font-bold text-tertiary-label">Adobe</div>
+                <div class="text-2xl font-bold text-tertiary-label">Okta</div>
+                <div class="text-2xl font-bold text-tertiary-label">Nextdoor</div>
             </div>
         </div>
     </section>
@@ -385,7 +672,7 @@
     </section>
 
     <!-- Deep-dive Section A: Autonomous Validation -->
-    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-gray-50">
+    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-secondary-system-background">
         <div class="max-w-7xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
@@ -436,20 +723,20 @@
                 </div>
                 
                 <div class="device-frame">
-                    <div class="bg-charcoal rounded-lg p-6 h-96">
-                        <div class="text-sm font-mono text-gray-400 mb-4">Pipeline Status Dashboard</div>
+                    <div class="device-content rounded-lg p-6 h-96">
+                        <div class="text-sm font-mono text-secondary-label mb-4">Pipeline Status Dashboard</div>
                         <div class="space-y-3">
-                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center justify-between p-3 terminal-item-bg rounded-lg">
                                 <span class="text-green-400">✓ Build</span>
-                                <span class="text-xs text-gray-500">2.3s</span>
+                                <span class="text-xs text-tertiary-label">2.3s</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center justify-between p-3 terminal-item-bg rounded-lg">
                                 <span class="text-green-400">✓ Test</span>
-                                <span class="text-xs text-gray-500">47/47 passed</span>
+                                <span class="text-xs text-tertiary-label">47/47 passed</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center justify-between p-3 terminal-item-bg rounded-lg">
                                 <span class="text-indigo">✓ Deploy</span>
-                                <span class="text-xs text-gray-500">Production</span>
+                                <span class="text-xs text-tertiary-label">Production</span>
                             </div>
                         </div>
                     </div>
@@ -508,7 +795,7 @@
                             </li>
                         </ul>
                         
-                        <button class="w-full border border-gray-300 text-gray-700 hover:border-indigo hover:text-indigo transition-all duration-200 py-3 rounded-lg font-semibold">
+                        <button class="w-full border separator text-secondary-label hover:border-indigo hover:text-indigo transition-all duration-200 py-3 rounded-lg font-semibold">
                             Get Started Free
                         </button>
                     </div>
@@ -586,7 +873,7 @@
                             </li>
                         </ul>
                         
-                        <button class="w-full border border-gray-300 text-gray-700 hover:border-indigo hover:text-indigo transition-all duration-200 py-3 rounded-lg font-semibold">
+                        <button class="w-full border separator text-secondary-label hover:border-indigo hover:text-indigo transition-all duration-200 py-3 rounded-lg font-semibold">
                             Contact Sales
                         </button>
                     </div>
@@ -602,7 +889,7 @@
     </section>
 
     <!-- Developer Docs CTA -->
-    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-gray-50">
+    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-secondary-system-background">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-6">
                 Get started — connect your repo
@@ -615,7 +902,7 @@
                 <button class="bg-indigo text-white hover:bg-blue-800 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
                     Open Docs
                 </button>
-                <button class="border border-gray-300 text-gray-700 hover:border-indigo hover:text-indigo transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
+                <button class="border separator text-secondary-label hover:border-indigo hover:text-indigo transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
                     Start Building
                 </button>
             </div>
@@ -667,14 +954,14 @@
                 </div>
                 
                 <div class="device-frame">
-                    <div class="bg-charcoal rounded-lg p-6 h-64">
-                        <div class="text-sm font-mono text-gray-400 mb-4">Developer Workflow</div>
+                    <div class="device-content rounded-lg p-6 h-64">
+                        <div class="text-sm font-mono text-secondary-label mb-4">Developer Workflow</div>
                         <div class="space-y-3">
                             <div class="text-xs font-mono text-green-400">git push origin main</div>
-                            <div class="text-xs font-mono text-gray-400">→ Auto-build triggered</div>
-                            <div class="text-xs font-mono text-gray-400">→ Tests running...</div>
+                            <div class="text-xs font-mono text-secondary-label">→ Auto-build triggered</div>
+                            <div class="text-xs font-mono text-secondary-label">→ Tests running...</div>
                             <div class="text-xs font-mono text-indigo">→ Deployed to staging</div>
-                            <div class="text-xs font-mono text-gray-400">→ Ready for review</div>
+                            <div class="text-xs font-mono text-secondary-label">→ Ready for review</div>
                         </div>
                     </div>
                 </div>
@@ -683,7 +970,7 @@
     </section>
 
     <!-- Customer Testimonials -->
-    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-gray-50">
+    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-secondary-system-background">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-4">
@@ -735,7 +1022,7 @@
     </section>
 
     <!-- Live Telemetry -->
-    <section class="py-8 px-4 sm:px-6 lg:px-16 bg-slate">
+    <section class="py-8 px-4 sm:px-6 lg:px-16 telemetry-background">
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center justify-center space-x-8 text-sm">
                 <div class="text-center">
@@ -755,39 +1042,39 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate text-white py-16 px-4 sm:px-6 lg:px-16">
+    <footer class="footer-background py-16 px-4 sm:px-6 lg:px-16">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <div class="text-xl font-bold text-indigo mb-4">DEIVERSE</div>
-                    <p class="text-steel text-sm mb-4">
+                    <p class="footer-text text-sm mb-4">
                         Build, validate, and ship production code — faster, safer.
                     </p>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">Product</h4>
+                    <h4 class="text-lg font-semibold footer-heading mb-4">Product</h4>
                     <div class="space-y-2">
-                        <a href="#features" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Features</a>
-                        <a href="#pricing" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Pricing</a>
-                        <a href="#docs" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Documentation</a>
+                        <a href="#features" class="block footer-text hover:text-indigo transition-colors duration-200 text-sm">Features</a>
+                        <a href="#pricing" class="block footer-text hover:text-indigo transition-colors duration-200 text-sm">Pricing</a>
+                        <a href="#docs" class="block footer-text hover:text-indigo transition-colors duration-200 text-sm">Documentation</a>
                     </div>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">Resources</h4>
+                    <h4 class="text-lg font-semibold footer-heading mb-4">Resources</h4>
                     <div class="space-y-2">
-                        <a href="#blog" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Blog</a>
-                        <a href="#" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Support</a>
-                        <a href="#" class="block text-steel hover:text-indigo transition-colors duration-200 text-sm">Community</a>
+                        <a href="#blog" class="block footer-text hover:text-indigo transition-colors duration-200 text-sm">Blog</a>
+                        <a href="#" class="block footer-text hover:text-indigo transition-colors duration-200 text-sm">Support</a>
+                        <a href="#" class="block footer-text hover:text-indigo transition-colors duration-200 text-sm">Community</a>
                     </div>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
-                    <p class="text-steel text-sm mb-2">contact@deiverse.com</p>
-                    <p class="text-steel text-sm">Leeds, United Kingdom</p>
+                    <h4 class="text-lg font-semibold footer-heading mb-4">Connect</h4>
+                    <p class="footer-text text-sm mb-2">contact@deiverse.com</p>
+                    <p class="footer-text text-sm">Leeds, United Kingdom</p>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                <p class="text-steel text-sm">&copy; 2024 DEIVERSE Internet Services, Inc. All Rights Reserved.</p>
+            <div class="border-t separator mt-8 pt-8 text-center">
+                <p class="text-secondary-label text-sm">&copy; 2024 DEIVERSE Internet Services, Inc. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
@@ -850,62 +1137,757 @@
             observer.observe(el);
         });
     </script>
+    <style>
+        /* Multi-step Onboarding Form Styles */
+        .onboarding-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .onboarding-modal {
+            background: var(--system-background);
+            max-width: 600px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .onboarding-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--separator);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--secondary-system-background);
+        }
+        
+        .onboarding-header h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--label);
+        }
+        
+        .onboarding-close {
+            background: transparent;
+            border: 0;
+            font-size: 24px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--secondary-label);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .onboarding-close:hover {
+            background: var(--secondary-system-fill);
+        }
+        
+        .onboarding-progress {
+            padding: 20px 24px;
+            background: var(--secondary-system-background);
+            border-bottom: 1px solid var(--separator);
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .progress-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .progress-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 60%;
+            right: -40%;
+            height: 2px;
+            background: var(--separator);
+            z-index: 0;
+        }
+        
+        .progress-step.completed:not(:last-child)::after {
+            background: var(--indigo);
+        }
+        
+        .step-indicator {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--secondary-system-fill);
+            color: var(--secondary-label);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active .step-indicator {
+            background: var(--indigo);
+            color: white;
+        }
+        
+        .progress-step.completed .step-indicator {
+            background: var(--indigo);
+            color: white;
+        }
+        
+        .progress-step.completed .step-indicator::before {
+            content: '✓';
+        }
+        
+        .step-label {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--secondary-label);
+            text-align: center;
+        }
+        
+        .progress-step.active .step-label {
+            color: var(--label);
+            font-weight: 600;
+        }
+        
+        .onboarding-content {
+            flex: 1;
+            padding: 32px 24px;
+            overflow-y: auto;
+        }
+        
+        .onboarding-step {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .onboarding-step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--label);
+            margin-bottom: 8px;
+        }
+        
+        .step-description {
+            font-size: 14px;
+            color: var(--secondary-label);
+            margin-bottom: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--label);
+            margin-bottom: 8px;
+        }
+        
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--separator);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--system-background);
+            color: var(--label);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+        
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--indigo);
+            box-shadow: 0 0 0 3px rgba(15, 59, 140, 0.1);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-error {
+            display: none;
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        
+        .form-error.show {
+            display: block;
+        }
+        
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border: 2px solid var(--separator);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--system-background);
+        }
+        
+        .checkbox-item:hover,
+        .radio-item:hover {
+            border-color: var(--indigo);
+            background: var(--secondary-system-background);
+        }
+        
+        .checkbox-item.selected,
+        .radio-item.selected {
+            border-color: var(--indigo);
+            background: rgba(15, 59, 140, 0.05);
+        }
+        
+        .checkbox-item input,
+        .radio-item input {
+            margin-right: 12px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label,
+        .radio-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--label);
+        }
+        
+        .checkbox-item .item-description {
+            display: block;
+            font-size: 12px;
+            color: var(--secondary-label);
+            margin-top: 4px;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .time-slot {
+            padding: 10px;
+            border: 2px solid var(--separator);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            background: var(--system-background);
+            color: var(--label);
+            transition: all 0.2s;
+        }
+        
+        .time-slot:hover {
+            border-color: var(--indigo);
+        }
+        
+        .time-slot.selected {
+            border-color: var(--indigo);
+            background: var(--indigo);
+            color: white;
+        }
+        
+        .time-slot.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .date-picker-wrapper {
+            margin-top: 12px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 12px;
+        }
+        
+        .calendar-day {
+            padding: 8px;
+            text-align: center;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .calendar-day:hover:not(.disabled):not(.selected) {
+            background: var(--secondary-system-background);
+        }
+        
+        .calendar-day.selected {
+            background: var(--indigo);
+            color: white;
+            border-color: var(--indigo);
+        }
+        
+        .calendar-day.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day.other-month {
+            opacity: 0.3;
+        }
+        
+        .onboarding-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--separator);
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--secondary-system-background);
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--indigo);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0a2d6b;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--label);
+            border: 1px solid var(--separator);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary-system-fill);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            color: white;
+        }
+        
+        .success-message h3 {
+            font-size: 24px;
+            color: var(--label);
+            margin-bottom: 12px;
+        }
+        
+        .success-message p {
+            color: var(--secondary-label);
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 640px) {
+            .onboarding-modal {
+                max-width: 100%;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+            
+            .progress-steps {
+                font-size: 10px;
+            }
+            
+            .step-indicator {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+            }
+            
+            .step-label {
+                font-size: 10px;
+            }
+        }
+    </style>
     <script>
-        // Reusable CTA modal form using formsubmit.co
-        (function setupCtaForm() {
+        // Multi-step Onboarding Form
+        (function setupOnboardingForm() {
             const modal = document.createElement('div');
-            modal.id = 'cta-modal';
+            modal.className = 'onboarding-overlay';
+            modal.id = 'onboarding-overlay';
             modal.innerHTML = `
-<div id="cta-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:10000;">
-  <div style="background:#fff;max-width:520px;width:92%;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,0.25);overflow:hidden;">
-    <div style="padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;">
-      <h3 id="cta-title" style="margin:0;font-size:18px;font-weight:700;color:#111827">Get Started</h3>
-      <button id="cta-close" aria-label="Close" style="background:transparent;border:0;font-size:20px;line-height:1;cursor:pointer;color:#6b7280">×</button>
+                <div class="onboarding-modal">
+                    <div class="onboarding-header">
+                        <h3 id="onboarding-title">Get Started with DEIVERSE</h3>
+                        <button class="onboarding-close" id="onboarding-close" aria-label="Close">×</button>
     </div>
-    <form id="cta-form" action="https://formsubmit.co/contact@deiverse.com" method="POST" style="padding:20px;">
-      <input type="hidden" name="_subject" id="cta-subject" value="DEIVERSE Inquiry"/>
-      <input type="hidden" name="context" id="cta-context" value=""/>
+                    <div class="onboarding-progress">
+                        <div class="progress-steps">
+                            <div class="progress-step active" data-step="1">
+                                <div class="step-indicator">1</div>
+                                <div class="step-label">Your Info</div>
+                            </div>
+                            <div class="progress-step" data-step="2">
+                                <div class="step-indicator">2</div>
+                                <div class="step-label">Customize</div>
+                            </div>
+                            <div class="progress-step" data-step="3">
+                                <div class="step-indicator">3</div>
+                                <div class="step-label">Schedule</div>
+                            </div>
+                            <div class="progress-step" data-step="4">
+                                <div class="step-indicator">4</div>
+                                <div class="step-label">Confirm</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="onboarding-content">
+                        <form id="onboarding-form" action="https://formsubmit.co/contact@deiverse.com" method="POST">
+                            <input type="hidden" name="_subject" value="New DEIVERSE Onboarding Request"/>
       <input type="hidden" name="_template" value="table"/>
       <input type="hidden" name="_captcha" value="false"/>
-      <div style="display:grid;gap:12px;">
-        <label style="display:grid;gap:6px;font-size:14px;color:#374151">
-          Name
-          <input name="name" required placeholder="Your name" style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;" />
+                            
+                            <!-- Step 1: Basic Information -->
+                            <div class="onboarding-step active" id="step-1">
+                                <h2 class="step-title">Tell us about yourself</h2>
+                                <p class="step-description">We'll use this information to personalize your experience.</p>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Full Name *</label>
+                                    <input type="text" name="name" class="form-input" placeholder="John Doe" required />
+                                    <span class="form-error" id="name-error">Please enter your name</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Work Email *</label>
+                                    <input type="email" name="email" class="form-input" placeholder="john@company.com" required />
+                                    <span class="form-error" id="email-error">Please enter a valid company email</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Company Name *</label>
+                                    <input type="text" name="company" class="form-input" placeholder="Acme Inc." required />
+                                    <span class="form-error" id="company-error">Please enter your company name</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Job Title</label>
+                                    <input type="text" name="job_title" class="form-input" placeholder="Engineering Manager" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" name="phone" class="form-input" placeholder="+1 (555) 123-4567" />
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2: Customization -->
+                            <div class="onboarding-step" id="step-2">
+                                <h2 class="step-title">Customize your experience</h2>
+                                <p class="step-description">Help us understand your needs to tailor the perfect solution.</p>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Your Role *</label>
+                                    <div class="radio-group">
+                                        <div class="radio-item" data-value="developer">
+                                            <input type="radio" name="role" value="developer" id="role-developer" required />
+                                            <label for="role-developer">
+                                                Developer
+                                                <span class="item-description">Individual contributor building products</span>
         </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:#374151">
-          Email
-          <input type="email" name="email" required placeholder="you@company.com" style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;" />
-          <span id="cta-error" style="display:none;color:#b91c1c;font-size:12px;margin-top:4px;">Please use a company email (no Gmail, Yahoo, Outlook, etc.).</span>
+                                        </div>
+                                        <div class="radio-item" data-value="engineering-manager">
+                                            <input type="radio" name="role" value="engineering-manager" id="role-manager" />
+                                            <label for="role-manager">
+                                                Engineering Manager
+                                                <span class="item-description">Leading engineering teams</span>
         </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:#374151">
-          Company
-          <input name="company" placeholder="Company name" style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;" />
+                                        </div>
+                                        <div class="radio-item" data-value="cto">
+                                            <input type="radio" name="role" value="cto" id="role-cto" />
+                                            <label for="role-cto">
+                                                CTO / VP Engineering
+                                                <span class="item-description">Strategic technology leadership</span>
         </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:#374151">
-          Message
-          <textarea name="message" rows="4" placeholder="Tell us about your use case" style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;resize:vertical;"></textarea>
+                                        </div>
+                                        <div class="radio-item" data-value="devops">
+                                            <input type="radio" name="role" value="devops" id="role-devops" />
+                                            <label for="role-devops">
+                                                DevOps / Platform Engineer
+                                                <span class="item-description">Infrastructure and automation</span>
         </label>
-        <button type="submit" style="margin-top:4px;background:#0F3B8C;color:#fff;padding:12px 16px;border:0;border-radius:10px;font-weight:600;cursor:pointer">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Team Size *</label>
+                                    <select name="team_size" class="form-select" required>
+                                        <option value="">Select team size</option>
+                                        <option value="1">Just me</option>
+                                        <option value="2-5">2-5 people</option>
+                                        <option value="6-10">6-10 people</option>
+                                        <option value="11-25">11-25 people</option>
+                                        <option value="26-50">26-50 people</option>
+                                        <option value="51-100">51-100 people</option>
+                                        <option value="100+">100+ people</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Primary Use Case *</label>
+                                    <div class="checkbox-group">
+                                        <div class="checkbox-item" data-value="ci-cd">
+                                            <input type="checkbox" name="use_case" value="CI/CD Automation" id="use-ci-cd" />
+                                            <label for="use-ci-cd">CI/CD Automation</label>
+                                        </div>
+                                        <div class="checkbox-item" data-value="infrastructure">
+                                            <input type="checkbox" name="use_case" value="Infrastructure as Code" id="use-infra" />
+                                            <label for="use-infra">Infrastructure as Code</label>
+                                        </div>
+                                        <div class="checkbox-item" data-value="code-scaffolding">
+                                            <input type="checkbox" name="use_case" value="Code Scaffolding" id="use-scaffold" />
+                                            <label for="use-scaffold">Code Scaffolding</label>
+                                        </div>
+                                        <div class="checkbox-item" data-value="monitoring">
+                                            <input type="checkbox" name="use_case" value="Monitoring & Security" id="use-monitoring" />
+                                            <label for="use-monitoring">Monitoring & Security</label>
+                                        </div>
+                                        <div class="checkbox-item" data-value="deployment">
+                                            <input type="checkbox" name="use_case" value="One-Click Deployment" id="use-deploy" />
+                                            <label for="use-deploy">One-Click Deployment</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Current Tools (Optional)</label>
+                                    <input type="text" name="current_tools" class="form-input" placeholder="GitHub Actions, Jenkins, Terraform, etc." />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Tell us about your challenges</label>
+                                    <textarea name="challenges" class="form-textarea" placeholder="What pain points are you trying to solve?"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3: Schedule Meeting -->
+                            <div class="onboarding-step" id="step-3">
+                                <h2 class="step-title">Schedule a meeting</h2>
+                                <p class="step-description">Choose a date and time that works for you. A representative will reach out to confirm.</p>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Preferred Date *</label>
+                                    <input type="date" name="meeting_date" class="form-input" id="meeting-date" required min="" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Preferred Time *</label>
+                                    <div class="time-slots" id="time-slots">
+                                        <div class="time-slot" data-time="09:00">9:00 AM</div>
+                                        <div class="time-slot" data-time="10:00">10:00 AM</div>
+                                        <div class="time-slot" data-time="11:00">11:00 AM</div>
+                                        <div class="time-slot" data-time="12:00">12:00 PM</div>
+                                        <div class="time-slot" data-time="13:00">1:00 PM</div>
+                                        <div class="time-slot" data-time="14:00">2:00 PM</div>
+                                        <div class="time-slot" data-time="15:00">3:00 PM</div>
+                                        <div class="time-slot" data-time="16:00">4:00 PM</div>
+                                        <div class="time-slot" data-time="17:00">5:00 PM</div>
+                                    </div>
+                                    <input type="hidden" name="meeting_time" id="meeting-time" required />
+                                    <span class="form-error" id="time-error">Please select a time slot</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Timezone</label>
+                                    <select name="timezone" class="form-select" id="timezone">
+                                        <option value="">Detecting...</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Additional Notes (Optional)</label>
+                                    <textarea name="meeting_notes" class="form-textarea" placeholder="Any specific topics you'd like to discuss?"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 4: Confirmation -->
+                            <div class="onboarding-step" id="step-4">
+                                <div class="success-message">
+                                    <div class="success-icon">✓</div>
+                                    <h3>Almost there!</h3>
+                                    <p>Please review your information below and submit to complete your onboarding.</p>
+                                </div>
+                                
+                                <div class="form-group" style="margin-top: 24px;">
+                                    <div style="padding: 16px; background: var(--secondary-system-background); border-radius: 8px; margin-bottom: 12px;">
+                                        <strong style="color: var(--label);">Name:</strong> <span id="review-name"></span>
+                                    </div>
+                                    <div style="padding: 16px; background: var(--secondary-system-background); border-radius: 8px; margin-bottom: 12px;">
+                                        <strong style="color: var(--label);">Email:</strong> <span id="review-email"></span>
+                                    </div>
+                                    <div style="padding: 16px; background: var(--secondary-system-background); border-radius: 8px; margin-bottom: 12px;">
+                                        <strong style="color: var(--label);">Company:</strong> <span id="review-company"></span>
+                                    </div>
+                                    <div style="padding: 16px; background: var(--secondary-system-background); border-radius: 8px; margin-bottom: 12px;">
+                                        <strong style="color: var(--label);">Role:</strong> <span id="review-role"></span>
+                                    </div>
+                                    <div style="padding: 16px; background: var(--secondary-system-background); border-radius: 8px; margin-bottom: 12px;">
+                                        <strong style="color: var(--label);">Team Size:</strong> <span id="review-team"></span>
+                                    </div>
+                                    <div style="padding: 16px; background: var(--secondary-system-background); border-radius: 8px; margin-bottom: 12px;">
+                                        <strong style="color: var(--label);">Meeting Date:</strong> <span id="review-date"></span>
+                                    </div>
+                                    <div style="padding: 16px; background: var(--secondary-system-background); border-radius: 8px;">
+                                        <strong style="color: var(--label);">Meeting Time:</strong> <span id="review-time"></span>
+                                    </div>
+                                </div>
+                                
+                                <input type="hidden" name="form_data" id="form-data-summary" />
       </div>
     </form>
   </div>
-</div>`;
+                    <div class="onboarding-footer">
+                        <button type="button" class="btn btn-secondary" id="prev-btn" style="display: none;">Previous</button>
+                        <div style="flex: 1;"></div>
+                        <button type="button" class="btn btn-primary" id="next-btn">Next</button>
+                        <button type="submit" form="onboarding-form" class="btn btn-primary" id="submit-btn" style="display: none;">Submit</button>
+                    </div>
+                </div>
+            `;
             document.body.appendChild(modal);
 
-            const overlay = document.getElementById('cta-overlay');
-            const closeBtn = document.getElementById('cta-close');
-            const title = document.getElementById('cta-title');
-            const subject = document.getElementById('cta-subject');
-            const contextInput = document.getElementById('cta-context');
-            const form = document.getElementById('cta-form');
-            const emailInput = form.querySelector('input[name="email"]');
-            const errorEl = document.getElementById('cta-error');
-
-            let currentType = 'trial';
+            const overlay = document.getElementById('onboarding-overlay');
+            const closeBtn = document.getElementById('onboarding-close');
+            const form = document.getElementById('onboarding-form');
+            let currentStep = 1;
+            const totalSteps = 4;
             const freeDomains = [
                 'gmail.com','yahoo.com','yahoo.co.uk','outlook.com','outlook.co.uk','hotmail.com','live.com','msn.com',
                 'icloud.com','me.com','proton.me','protonmail.com','aol.com','mail.com','zoho.com','yandex.com','gmx.com'
             ];
+
+            // Set minimum date to today
+            const dateInput = document.getElementById('meeting-date');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
+            }
+
+            // Detect timezone
+            try {
+                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const timezoneSelect = document.getElementById('timezone');
+                if (timezoneSelect) {
+                    timezoneSelect.innerHTML = `<option value="${timezone}" selected>${timezone}</option>`;
+                }
+            } catch (e) {
+                console.error('Timezone detection failed', e);
+            }
+
+            // Radio and checkbox handlers
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.radio-item')) {
+                    const item = e.target.closest('.radio-item');
+                    document.querySelectorAll('.radio-item').forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                    const radio = item.querySelector('input[type="radio"]');
+                    if (radio) radio.checked = true;
+                }
+                
+                if (e.target.closest('.checkbox-item')) {
+                    const item = e.target.closest('.checkbox-item');
+                    const checkbox = item.querySelector('input[type="checkbox"]');
+                    if (checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        item.classList.toggle('selected', checkbox.checked);
+                    }
+                }
+                
+                if (e.target.closest('.time-slot') && !e.target.closest('.time-slot').classList.contains('disabled')) {
+                    const slot = e.target.closest('.time-slot');
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                    slot.classList.add('selected');
+                    const timeInput = document.getElementById('meeting-time');
+                    if (timeInput) timeInput.value = slot.dataset.time;
+                    const error = document.getElementById('time-error');
+                    if (error) error.classList.remove('show');
+                }
+            });
+
             function isFreeDomain(email) {
                 const at = email.lastIndexOf('@');
                 if (at < 0) return true;
@@ -914,39 +1896,260 @@
                 return freeDomains.includes(domain);
             }
 
-            function open(type, originText) {
-                title.textContent = type === 'demo' ? 'Schedule a Demo' : 'Start Free Trial';
-                subject.value = type === 'demo' ? 'Schedule a demo' : 'Try DEIVERSE Free';
-                contextInput.value = `${type} • from: ${originText}`;
-                currentType = type;
-                if (errorEl) { errorEl.style.display = 'none'; }
-                overlay.style.display = 'flex';
+            function validateStep(step) {
+                const stepEl = document.getElementById(`step-${step}`);
+                if (!stepEl) return false;
+
+                if (step === 1) {
+                    const name = form.querySelector('[name="name"]').value.trim();
+                    const email = form.querySelector('[name="email"]').value.trim();
+                    const company = form.querySelector('[name="company"]').value.trim();
+                    
+                    if (!name) {
+                        document.getElementById('name-error').classList.add('show');
+                        return false;
+                    }
+                    if (!email || isFreeDomain(email)) {
+                        document.getElementById('email-error').classList.add('show');
+                        return false;
+                    }
+                    if (!company) {
+                        document.getElementById('company-error').classList.add('show');
+                        return false;
+                    }
+                    return true;
+                } else if (step === 2) {
+                    const role = form.querySelector('[name="role"]:checked');
+                    const teamSize = form.querySelector('[name="team_size"]').value;
+                    const useCases = form.querySelectorAll('[name="use_case"]:checked');
+                    
+                    if (!role) return false;
+                    if (!teamSize) return false;
+                    if (useCases.length === 0) return false;
+                    return true;
+                } else if (step === 3) {
+                    const date = form.querySelector('[name="meeting_date"]').value;
+                    const time = document.getElementById('meeting-time').value;
+                    
+                    if (!date) return false;
+                    if (!time) {
+                        document.getElementById('time-error').classList.add('show');
+                        return false;
+                    }
+                    return true;
+                }
+                return true;
             }
-            function close() { overlay.style.display = 'none'; }
+
+            function updateProgress() {
+                document.querySelectorAll('.progress-step').forEach((step, index) => {
+                    const stepNum = index + 1;
+                    step.classList.remove('active', 'completed');
+                    if (stepNum < currentStep) {
+                        step.classList.add('completed');
+                    } else if (stepNum === currentStep) {
+                        step.classList.add('active');
+                    }
+                });
+
+                document.querySelectorAll('.onboarding-step').forEach((step, index) => {
+                    step.classList.toggle('active', index + 1 === currentStep);
+                });
+
+                document.getElementById('prev-btn').style.display = currentStep > 1 ? 'block' : 'none';
+                document.getElementById('next-btn').style.display = currentStep < totalSteps ? 'block' : 'none';
+                document.getElementById('submit-btn').style.display = currentStep === totalSteps ? 'block' : 'none';
+
+                if (currentStep === 4) {
+                    updateReview();
+                }
+            }
+
+            function updateReview() {
+                const formData = new FormData(form);
+                document.getElementById('review-name').textContent = formData.get('name') || 'N/A';
+                document.getElementById('review-email').textContent = formData.get('email') || 'N/A';
+                document.getElementById('review-company').textContent = formData.get('company') || 'N/A';
+                
+                const role = form.querySelector('[name="role"]:checked');
+                document.getElementById('review-role').textContent = role ? role.value : 'N/A';
+                
+                document.getElementById('review-team').textContent = formData.get('team_size') || 'N/A';
+                
+                const date = formData.get('meeting_date');
+                if (date) {
+                    const dateObj = new Date(date + 'T00:00:00');
+                    document.getElementById('review-date').textContent = dateObj.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                } else {
+                    document.getElementById('review-date').textContent = 'N/A';
+                }
+                
+                const time = formData.get('meeting_time');
+                if (time) {
+                    const [hours, minutes] = time.split(':');
+                    const hour = parseInt(hours);
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour % 12 || 12;
+                    document.getElementById('review-time').textContent = `${displayHour}:${minutes} ${ampm}`;
+                } else {
+                    document.getElementById('review-time').textContent = 'N/A';
+                }
+
+                // Create summary for form submission
+                const summary = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    company: formData.get('company'),
+                    job_title: formData.get('job_title'),
+                    phone: formData.get('phone'),
+                    role: formData.get('role'),
+                    team_size: formData.get('team_size'),
+                    use_cases: Array.from(form.querySelectorAll('[name="use_case"]:checked')).map(cb => cb.value).join(', '),
+                    current_tools: formData.get('current_tools'),
+                    challenges: formData.get('challenges'),
+                    meeting_date: formData.get('meeting_date'),
+                    meeting_time: formData.get('meeting_time'),
+                    timezone: formData.get('timezone'),
+                    meeting_notes: formData.get('meeting_notes')
+                };
+                document.getElementById('form-data-summary').value = JSON.stringify(summary);
+            }
+
+            function nextStep() {
+                if (validateStep(currentStep)) {
+                    if (currentStep < totalSteps) {
+                        currentStep++;
+                        updateProgress();
+                    }
+                }
+            }
+
+            function prevStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateProgress();
+                }
+            }
+
+            function open() {
+                overlay.style.display = 'flex';
+                currentStep = 1;
+                form.reset();
+                document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
+                document.querySelectorAll('.radio-item, .checkbox-item').forEach(item => item.classList.remove('selected'));
+                document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
+                document.getElementById('meeting-time').value = '';
+                updateProgress();
+            }
+
+            function close() {
+                overlay.style.display = 'none';
+            }
+
             closeBtn.addEventListener('click', close);
-            overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) close();
+            });
+
+            document.getElementById('next-btn').addEventListener('click', nextStep);
+            document.getElementById('prev-btn').addEventListener('click', prevStep);
 
             form.addEventListener('submit', (e) => {
-                if (currentType === 'trial') {
-                    const email = (emailInput.value || '').trim();
-                    if (isFreeDomain(email)) {
                         e.preventDefault();
-                        if (errorEl) { errorEl.style.display = 'block'; }
-                        emailInput.focus();
-                        return;
+                
+                // Create hidden inputs for all form data
+                const formData = new FormData(form);
+                const summary = JSON.parse(document.getElementById('form-data-summary').value);
+                
+                // Add all fields as hidden inputs for form submission
+                Object.keys(summary).forEach(key => {
+                    if (summary[key]) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = summary[key];
+                        form.appendChild(input);
+                    }
+                });
+
+                // Submit via FormSubmit
+                const formAction = form.action;
+                const formMethod = form.method;
+                
+                // Create a temporary form for submission
+                const submitForm = document.createElement('form');
+                submitForm.action = formAction;
+                submitForm.method = formMethod;
+                submitForm.style.display = 'none';
+                
+                // Copy all inputs
+                form.querySelectorAll('input, select, textarea').forEach(input => {
+                    if (input.type !== 'button' && input.type !== 'submit') {
+                        const newInput = document.createElement('input');
+                        newInput.type = 'hidden';
+                        newInput.name = input.name || input.id;
+                        newInput.value = input.value || (input.checked ? input.value : '');
+                        if (newInput.name && newInput.value) {
+                            submitForm.appendChild(newInput);
                     }
                 }
             });
 
+                // Handle checkboxes
+                form.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                    const newInput = document.createElement('input');
+                    newInput.type = 'hidden';
+                    newInput.name = checkbox.name;
+                    newInput.value = checkbox.value;
+                    submitForm.appendChild(newInput);
+                });
+
+                document.body.appendChild(submitForm);
+                submitForm.submit();
+
+                // Show success message
+                document.getElementById('step-4').innerHTML = `
+                    <div class="success-message">
+                        <div class="success-icon">✓</div>
+                        <h3>Thank you!</h3>
+                        <p>Your information has been submitted successfully.</p>
+                        <p style="margin-top: 16px; font-size: 14px;">A representative will reach out to you at <strong>${summary.email}</strong> to confirm your meeting.</p>
+                        <p style="margin-top: 8px; font-size: 14px;">We're excited to help you get started with DEIVERSE!</p>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    close();
+                    document.body.removeChild(submitForm);
+                }, 3000);
+            });
+
+            // Attach to all CTA buttons
             const matchesTry = (text) => /try|get started/i.test(text);
-            const matchesDemo = (text) => /schedule\s*demo|demo/i.test(text);
+            const matchesDemo = (text) => /schedule\s*demo|demo|watch demo/i.test(text);
+            
             document.querySelectorAll('button, a').forEach(el => {
                 const text = (el.textContent || '').trim();
-                if (matchesTry(text)) {
-                    el.addEventListener('click', (e) => { e.preventDefault(); open('trial', text); });
-                } else if (matchesDemo(text)) {
-                    el.addEventListener('click', (e) => { e.preventDefault(); open('demo', text); });
+                if (matchesTry(text) || matchesDemo(text)) {
+                    el.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        open();
+                    });
                 }
+            });
+
+            // Clear errors on input
+            form.querySelectorAll('input, select, textarea').forEach(input => {
+                input.addEventListener('input', () => {
+                    const errorId = input.name + '-error';
+                    const error = document.getElementById(errorId);
+                    if (error) error.classList.remove('show');
+                });
             });
         })();
     </script>
