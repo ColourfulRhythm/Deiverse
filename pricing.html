@@ -172,7 +172,7 @@
                         </svg>
                     </button>
                     <button class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-6 py-2 rounded-lg font-semibold">
-                        Try for free
+                        Contact us
                     </button>
                 </div>
             </div>
@@ -499,7 +499,7 @@
                 <div>
                     <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
                     <p class="text-steel text-sm mb-2">contact@deiverse.com</p>
-                    <p class="text-steel text-sm">Leeds, United Kingdom</p>
+                    <p class="text-steel text-sm">Lagos, Nigeria</p>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
@@ -589,8 +589,8 @@
         document.querySelectorAll('button').forEach(button => {
             button.addEventListener('click', function() {
                 const text = this.textContent.trim();
-                if (text.includes('Try') || text.includes('Free')) {
-                    openSignupModal('starter');
+                if (text.includes('Contact')) {
+                    alert('Please contact us at contact@deiverse.com');
                 }
             });
         });
@@ -645,7 +645,7 @@
 
             function open(type, originText) {
                 title.textContent = type === 'demo' ? 'Schedule a Demo' : 'Start Free Trial';
-                subject.value = type === 'demo' ? 'Schedule a demo' : 'Try DEIVERSE Free';
+                subject.value = type === 'demo' ? 'Schedule a demo' : 'Contact us';
                 contextInput.value = `${type} • from: ${originText}`;
                 currentType = type;
                 errorEl.style.display = 'none';

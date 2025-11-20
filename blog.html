@@ -112,7 +112,7 @@
                         </svg>
                     </button>
                     <button class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-6 py-2 rounded-lg font-semibold">
-                        Try for free
+                        Contact us
                     </button>
                 </div>
             </div>
@@ -228,7 +228,7 @@
                             <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
                                 <span class="text-white text-xs font-bold">SM</span>
                             </div>
-                            <span class="text-sm text-steel">Sarah Martinez</span>
+                            <span class="text-sm text-steel">Simi Martins</span>
                         </div>
                         <span class="text-sm text-steel">Dec 12, 2024</span>
                     </div>
@@ -256,7 +256,7 @@
                             <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
                                 <span class="text-white text-xs font-bold">JW</span>
                             </div>
-                            <span class="text-sm text-steel">James Wilson</span>
+                            <span class="text-sm text-steel">Jide Williams</span>
                         </div>
                         <span class="text-sm text-steel">Dec 10, 2024</span>
                     </div>
@@ -284,7 +284,7 @@
                             <div class="w-6 h-6 bg-indigo rounded-full flex items-center justify-center">
                                 <span class="text-white text-xs font-bold">AR</span>
                             </div>
-                            <span class="text-sm text-steel">Alex Rodriguez</span>
+                            <span class="text-sm text-steel">Adebayo Rotimi</span>
                         </div>
                         <span class="text-sm text-steel">Dec 8, 2024</span>
                     </div>
@@ -439,7 +439,7 @@
                 <div>
                     <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
                     <p class="text-steel text-sm mb-2">contact@deiverse.com</p>
-                    <p class="text-steel text-sm">Leeds, United Kingdom</p>
+                    <p class="text-steel text-sm">Lagos, Nigeria</p>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
@@ -530,8 +530,8 @@
         document.querySelectorAll('button').forEach(button => {
             button.addEventListener('click', function() {
                 const text = this.textContent.trim();
-                if (text.includes('Try') || text.includes('Free')) {
-                    window.location.href = 'pricing.html';
+                if (text.includes('Contact')) {
+                    alert('Please contact us at contact@deiverse.com');
                 } else if (text.includes('Read Article')) {
                     alert('Article reading functionality would open the full blog post.');
                 }
@@ -595,7 +595,7 @@
 
             function open(type, originText) {
                 title.textContent = type === 'demo' ? 'Schedule a Demo' : 'Start Free Trial';
-                subject.value = type === 'demo' ? 'Schedule a demo' : 'Try DEIVERSE Free';
+                subject.value = type === 'demo' ? 'Schedule a demo' : 'Contact us';
                 contextInput.value = `${type} • from: ${originText}`;
                 currentType = type;
                 errorEl.style.display = 'none';
