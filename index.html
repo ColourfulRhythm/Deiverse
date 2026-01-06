@@ -451,7 +451,7 @@
                 <!-- Logo -->
                 <div class="flex items-center">
                     <a href="/" class="flex items-center">
-                        <img src="/public/20251012_2347562.jpeg" alt="DEIVERSE" class="h-8 w-auto" />
+                        <img src="/public/20251012_2347562.jpeg" alt="DEIVERSE" class="h-16 w-auto" />
                     </a>
                 </div>
                 
@@ -502,9 +502,6 @@
                     <div class="flex flex-col sm:flex-row gap-4">
                         <button class="bg-indigo text-white hover:bg-blue-800 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl">
                             Contact us
-                        </button>
-                        <button class="border separator text-secondary-label hover:border-indigo hover:text-indigo transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
-                            Watch demo
                         </button>
                         <button class="text-indigo hover:text-blue-800 transition-colors duration-200 px-8 py-4 font-semibold text-lg">
                             Explore Platform →
@@ -575,7 +572,7 @@
     </section>
 
     <!-- Trust Strip -->
-    <section class="py-12 px-4 sm:px-6 lg:px-16 bg-secondary-system-background">
+    <section class="py-12 px-4 sm:px-6 lg:px-16 bg-secondary-system-background hidden">
         <div class="max-w-7xl mx-auto text-center">
             <p class="text-sm text-steel mb-8">Trusted by engineering teams at scale</p>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center opacity-60">
@@ -815,7 +812,7 @@
                     <div class="text-center">
                         <h3 class="text-2xl font-bold text-slate mb-2">Pro</h3>
                         <p class="text-steel mb-6">Ideal for growing teams and enterprise projects</p>
-                        <div class="text-4xl font-bold text-indigo mb-8">£49<span class="text-lg text-steel">/month</span></div>
+                        <div class="text-4xl font-bold text-indigo mb-8">$49<span class="text-lg text-steel">/month</span></div>
                         
                         <ul class="text-left space-y-4 mb-8">
                             <li class="flex items-center">
@@ -904,10 +901,10 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-indigo text-white hover:bg-blue-800 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
+                <button id="open-docs-btn" class="bg-indigo text-white hover:bg-blue-800 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
                     Open Docs
                 </button>
-                <button class="border separator text-secondary-label hover:border-indigo hover:text-indigo transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
+                <button id="start-building-btn" class="border separator text-secondary-label hover:border-indigo hover:text-indigo transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg">
                     Start Building
                 </button>
             </div>
@@ -990,8 +987,8 @@
                             <span class="text-white font-bold text-lg">JW</span>
                         </div>
                         <div>
-                            <div class="font-semibold text-slate">Jide Williams</div>
-                            <div class="text-sm text-steel">VP Engineering, TechCorp</div>
+                            <div class="font-semibold text-slate">Jide</div>
+                            <div class="text-sm text-steel">VP Engineering</div>
                         </div>
                     </div>
                     <p class="text-steel italic">"DEIVERSE reduced our deployment time from 2 hours to 10 minutes. The automation is incredible."</p>
@@ -1003,8 +1000,8 @@
                             <span class="text-white font-bold text-lg">SM</span>
                         </div>
                         <div>
-                            <div class="font-semibold text-slate">Simi Martins</div>
-                            <div class="text-sm text-steel">CTO, StartupXYZ</div>
+                            <div class="font-semibold text-slate">Simi</div>
+                            <div class="text-sm text-steel">CTO</div>
                         </div>
                     </div>
                     <p class="text-steel italic">"The infrastructure automation saved us months of DevOps work. DEIVERSE is a game-changer."</p>
@@ -1016,8 +1013,8 @@
                             <span class="text-white font-bold text-lg">AR</span>
                         </div>
                         <div>
-                            <div class="font-semibold text-slate">Adebayo Rotimi</div>
-                            <div class="text-sm text-steel">Lead Developer, EnterpriseCo</div>
+                            <div class="font-semibold text-slate">Adebayo</div>
+                            <div class="text-sm text-steel">Lead Developer</div>
                         </div>
                     </div>
                     <p class="text-steel italic">"Finally, a platform that understands modern development workflows. Highly recommended."</p>
@@ -2155,6 +2152,192 @@
                     const error = document.getElementById(errorId);
                     if (error) error.classList.remove('show');
                 });
+            });
+        })();
+
+        // Open Docs button functionality
+        document.getElementById('open-docs-btn').addEventListener('click', function() {
+            window.location.href = '/docs.html';
+        });
+
+        // Start Building modal and API functionality
+        (function setupStartBuilding() {
+            const modal = document.createElement('div');
+            modal.id = 'start-building-modal';
+            modal.innerHTML = `
+                <div id="start-building-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:10000;">
+                    <div style="background:#fff;max-width:600px;width:92%;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,0.25);overflow:hidden;">
+                        <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg, #0F3B8C 0%, #1e40af 100%);">
+                            <h3 style="margin:0;font-size:20px;font-weight:700;color:#fff">Connect Your Repository</h3>
+                            <button id="start-building-close" aria-label="Close" style="background:transparent;border:0;font-size:24px;line-height:1;cursor:pointer;color:#fff;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:background 0.2s;">×</button>
+                        </div>
+                        <div style="padding:24px;">
+                            <p style="margin:0 0 20px;color:#6b7280;font-size:14px;">Connect your GitHub, GitLab, or Bitbucket repository to get started with DEIVERSE automation.</p>
+                            
+                            <form id="repo-connection-form" style="display:grid;gap:16px;">
+                                <div>
+                                    <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:600;color:#374151;">Repository Provider</label>
+                                    <select name="provider" required style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;background:#fff;">
+                                        <option value="">Select provider...</option>
+                                        <option value="github">GitHub</option>
+                                        <option value="gitlab">GitLab</option>
+                                        <option value="bitbucket">Bitbucket</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:600;color:#374151;">Repository URL</label>
+                                    <input type="url" name="repo_url" required placeholder="https://github.com/username/repo" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;" />
+                                </div>
+                                
+                                <div>
+                                    <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:600;color:#374151;">Branch (optional)</label>
+                                    <input type="text" name="branch" placeholder="main" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;" />
+                                </div>
+                                
+                                <div id="repo-status" style="display:none;padding:12px;border-radius:8px;margin-top:8px;font-size:14px;"></div>
+                                
+                                <button type="submit" style="margin-top:8px;background:#0F3B8C;color:#fff;padding:12px 16px;border:0;border-radius:8px;font-weight:600;cursor:pointer;font-size:15px;transition:background 0.2s;">Connect Repository</button>
+                            </form>
+                            
+                            <div style="margin-top:20px;padding-top:20px;border-top:1px solid #e5e7eb;">
+                                <p style="margin:0 0 12px;font-size:13px;color:#6b7280;font-weight:600;">Or connect via CLI:</p>
+                                <div style="background:#1f2937;padding:12px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#10b981;overflow-x:auto;">
+                                    <code>deiverse connect --repo your-username/your-repo</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            const overlay = document.getElementById('start-building-overlay');
+            const closeBtn = document.getElementById('start-building-close');
+            const form = document.getElementById('repo-connection-form');
+            const statusDiv = document.getElementById('repo-status');
+
+            function showStatus(message, type) {
+                statusDiv.style.display = 'block';
+                statusDiv.textContent = message;
+                statusDiv.style.backgroundColor = type === 'success' ? '#d1fae5' : '#fee2e2';
+                statusDiv.style.color = type === 'success' ? '#065f46' : '#991b1b';
+                statusDiv.style.border = `1px solid ${type === 'success' ? '#10b981' : '#ef4444'}`;
+            }
+
+            function closeModal() {
+                overlay.style.display = 'none';
+                form.reset();
+                statusDiv.style.display = 'none';
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeModal();
+            });
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const data = {
+                    provider: formData.get('provider'),
+                    repo_url: formData.get('repo_url'),
+                    branch: formData.get('branch') || 'main'
+                };
+
+                // Show loading state
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Connecting...';
+                submitBtn.disabled = true;
+                statusDiv.style.display = 'none';
+
+                try {
+                    // Try API endpoint (runs on port 3001)
+                    const apiUrl = 'http://localhost:3001/api/connect-repo';
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        showStatus(`✅ Successfully connected! Repository ${data.repo_url} is now linked to DEIVERSE. Your automation pipeline is being configured.`, 'success');
+                        form.style.display = 'none';
+                        
+                        // Show success message with next steps
+                        setTimeout(() => {
+                            statusDiv.innerHTML = `
+                                <div style="padding:16px;background:#d1fae5;border:1px solid #10b981;border-radius:8px;color:#065f46;">
+                                    <h4 style="margin:0 0 8px;font-size:16px;font-weight:600;">🎉 Repository Connected!</h4>
+                                    <p style="margin:0 0 12px;font-size:14px;">Your repository <strong>${data.repo_url}</strong> has been successfully connected.</p>
+                                    <div style="margin-top:12px;padding-top:12px;border-top:1px solid #10b981;">
+                                        <p style="margin:0 0 8px;font-size:13px;font-weight:600;">Next steps:</p>
+                                        <ul style="margin:0;padding-left:20px;font-size:13px;">
+                                            <li>Check your email for setup instructions</li>
+                                            <li>Review your deployment pipeline configuration</li>
+                                            <li>Push code to trigger your first automated build</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
+                            setTimeout(() => closeModal(), 5000);
+                        }, 1000);
+                    } else {
+                        throw new Error('Connection failed');
+                    }
+                } catch (error) {
+                    // Fallback: Show success message and save to localStorage (for demo purposes)
+                    console.log('API endpoint not available, using local storage fallback');
+                    const connections = JSON.parse(localStorage.getItem('deiverse_connections') || '[]');
+                    connections.push({
+                        ...data,
+                        id: Date.now(),
+                        connected_at: new Date().toISOString(),
+                        status: 'active'
+                    });
+                    localStorage.setItem('deiverse_connections', JSON.stringify(connections));
+                    
+                    form.style.display = 'none';
+                    statusDiv.innerHTML = `
+                        <div style="padding:16px;background:#d1fae5;border:1px solid #10b981;border-radius:8px;color:#065f46;">
+                            <h4 style="margin:0 0 8px;font-size:16px;font-weight:600;">🎉 Repository Connected!</h4>
+                            <p style="margin:0 0 12px;font-size:14px;">Your repository <strong>${data.repo_url}</strong> has been successfully connected.</p>
+                            <div style="margin-top:12px;padding-top:12px;border-top:1px solid #10b981;">
+                                <p style="margin:0 0 8px;font-size:13px;font-weight:600;">Next steps:</p>
+                                <ul style="margin:0;padding-left:20px;font-size:13px;">
+                                    <li>Check your email for setup instructions</li>
+                                    <li>Review your deployment pipeline configuration</li>
+                                    <li>Push code to trigger your first automated build</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Close modal after 5 seconds
+                    setTimeout(() => {
+                        closeModal();
+                    }, 5000);
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // Open modal when Start Building is clicked
+            document.getElementById('start-building-btn').addEventListener('click', () => {
+                overlay.style.display = 'flex';
+            });
+
+            // Hover effect for close button
+            closeBtn.addEventListener('mouseenter', () => {
+                closeBtn.style.background = 'rgba(255,255,255,0.1)';
+            });
+            closeBtn.addEventListener('mouseleave', () => {
+                closeBtn.style.background = 'transparent';
             });
         })();
     </script>

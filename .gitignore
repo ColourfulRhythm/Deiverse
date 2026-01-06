@@ -1,2 +1,5 @@
 .v
 .DS_Store
+node_modules/
+api/node_modules/
+api/connections.json
