@@ -472,7 +472,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
                     </button>
-                    <button class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-6 py-2 rounded-lg font-semibold">
+                    <button id="header-contact-us-btn" class="bg-indigo text-white hover:bg-blue-800 transition-colors duration-200 px-6 py-2 rounded-lg font-semibold">
                         Contact us
                     </button>
                 </div>
@@ -500,10 +500,10 @@
                     
                     <!-- CTAs -->
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <button class="bg-indigo text-white hover:bg-blue-800 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl">
+                        <button id="hero-contact-us-btn" class="bg-indigo text-white hover:bg-blue-800 transition-all duration-200 px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl">
                             Contact us
                         </button>
-                        <button class="text-indigo hover:text-blue-800 transition-colors duration-200 px-8 py-4 font-semibold text-lg">
+                        <button id="explore-platform-btn" class="text-indigo hover:text-blue-800 transition-colors duration-200 px-8 py-4 font-semibold text-lg">
                             Explore Platform →
                         </button>
                     </div>
@@ -2158,6 +2158,77 @@
         // Open Docs button functionality
         document.getElementById('open-docs-btn').addEventListener('click', function() {
             window.location.href = '/docs.html';
+        });
+
+        // Contact us buttons functionality
+        function openContactModal() {
+            // Find the onboarding modal overlay and open it
+            const onboardingOverlay = document.getElementById('onboarding-overlay');
+            if (onboardingOverlay) {
+                // Reset the form to step 1 if needed
+                const form = onboardingOverlay.querySelector('form');
+                if (form) {
+                    form.reset();
+                    const currentStep = onboardingOverlay.querySelector('.onboarding-step.active');
+                    if (currentStep) {
+                        currentStep.classList.remove('active');
+                    }
+                    const firstStep = onboardingOverlay.querySelector('.onboarding-step');
+                    if (firstStep) {
+                        firstStep.classList.add('active');
+                    }
+                    // Clear any errors
+                    onboardingOverlay.querySelectorAll('.form-error').forEach(err => err.classList.remove('show'));
+                }
+                onboardingOverlay.style.display = 'flex';
+            } else {
+                // Fallback: Try to find any button that opens a contact/trial modal
+                const buttons = document.querySelectorAll('button, a');
+                for (let btn of buttons) {
+                    const text = (btn.textContent || '').trim();
+                    if (/try|get started|contact/i.test(text) && !text.includes('Explore')) {
+                        btn.click();
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Hero section Contact us button
+        const heroContactBtn = document.getElementById('hero-contact-us-btn');
+        if (heroContactBtn) {
+            heroContactBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openContactModal();
+            });
+        }
+
+        // Header Contact us button
+        const headerContactBtn = document.getElementById('header-contact-us-btn');
+        if (headerContactBtn) {
+            headerContactBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openContactModal();
+            });
+        }
+
+        // Explore Platform button functionality
+        document.getElementById('explore-platform-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Scroll to features section
+            const featuresSection = document.getElementById('features');
+            if (featuresSection) {
+                const offset = 80;
+                const elementPosition = featuresSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - offset;
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            } else {
+                // If features section doesn't exist, navigate to features page
+                window.location.href = '/features.html';
+            }
         });
 
         // Start Building modal and API functionality
