@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline Dashboard - DEIVERSE</title>
+    <link rel="icon" type="image/jpeg" href="/public/20251012_2347562.jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        'indigo': '#0F3B8C',
+                        'slate': '#2E3440',
+                        'steel': '#97A0B3',
+                        'off-white': '#F7F8FA',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .pipeline-stage {
+            transition: all 0.3s ease;
+        }
+        .pipeline-stage.active {
+            background: linear-gradient(135deg, #0F3B8C 0%, #1e40af 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+        .pipeline-stage.completed {
+            background: #10b981;
+            color: white;
+        }
+        .pipeline-stage.failed {
+            background: #ef4444;
+            color: white;
+        }
+        .pipeline-stage.pending {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .pulse-dot {
+            animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .notification-badge {
+            animation: pulse-dot 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-off-white text-slate antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="/" class="flex items-center">
+                        <span class="text-xl font-bold text-indigo">DEIVERSE</span>
+                    </a>
+                    <nav class="hidden md:flex items-center space-x-6">
+                        <a href="/" class="text-gray-600 hover:text-indigo transition-colors">Home</a>
+                        <a href="/dashboard.html" class="text-indigo font-medium">Dashboard</a>
+                        <a href="/docs.html" class="text-gray-600 hover:text-indigo transition-colors">Docs</a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button id="notifications-btn" class="relative p-2 text-gray-600 hover:text-indigo">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                            <span id="notification-count" class="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center notification-badge" style="display: none;">3</span>
+                        </button>
+                    </div>
+                    <button class="bg-indigo text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition-colors">
+                        Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-slate mb-2">Pipeline Dashboard</h1>
+            <p class="text-steel">Real-time monitoring of your CI/CD pipelines and deployments</p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="glass-card rounded-xl p-6">
+                <div class="text-sm text-steel mb-1">Active Pipelines</div>
+                <div class="text-3xl font-bold text-slate" id="active-pipelines">3</div>
+                <div class="text-xs text-green-600 mt-2">✓ All healthy</div>
+            </div>
+            <div class="glass-card rounded-xl p-6">
+                <div class="text-sm text-steel mb-1">Deployments Today</div>
+                <div class="text-3xl font-bold text-slate" id="deployments-today">12</div>
+                <div class="text-xs text-green-600 mt-2">↑ +4 from yesterday</div>
+            </div>
+            <div class="glass-card rounded-xl p-6">
+                <div class="text-sm text-steel mb-1">Success Rate</div>
+                <div class="text-3xl font-bold text-slate" id="success-rate">98.5%</div>
+                <div class="text-xs text-green-600 mt-2">✓ Above target</div>
+            </div>
+            <div class="glass-card rounded-xl p-6">
+                <div class="text-sm text-steel mb-1">Avg Build Time</div>
+                <div class="text-3xl font-bold text-slate" id="avg-build-time">2.3m</div>
+                <div class="text-xs text-green-600 mt-2">↓ -15% improvement</div>
+            </div>
+        </div>
+
+        <!-- Active Pipelines -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-slate">Active Pipelines</h2>
+                <button class="text-indigo hover:text-blue-800 font-medium">View All →</button>
+            </div>
+            <div id="active-pipelines-list" class="space-y-4">
+                <!-- Pipelines will be dynamically loaded here -->
+            </div>
+        </div>
+
+        <!-- Metrics & Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Deployment Frequency -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-slate mb-4">Deployment Frequency (Last 7 Days)</h3>
+                <div style="height: 200px; position: relative;">
+                    <canvas id="deployment-chart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Build Time Trends -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-slate mb-4">Build Time Trends</h3>
+                <div style="height: 200px; position: relative;">
+                    <canvas id="build-time-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Deployments -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-slate mb-4">Recent Deployments</h2>
+            <div class="glass-card rounded-xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-steel uppercase tracking-wider">Repository</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-steel uppercase tracking-wider">Branch</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-steel uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-steel uppercase tracking-wider">Environment</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-steel uppercase tracking-wider">Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-steel uppercase tracking-wider">Duration</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-steel uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deployments-table" class="bg-white divide-y divide-gray-200">
+                            <!-- Deployments will be dynamically loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Activity Feed -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-slate mb-4">Team Activity</h2>
+            <div class="glass-card rounded-xl p-6">
+                <div id="activity-feed" class="space-y-4">
+                    <!-- Activity items will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data
+        const mockPipelines = [
+            {
+                id: 1,
+                repo: 'deiverse/frontend',
+                branch: 'main',
+                status: 'running',
+                stages: [
+                    { name: 'Build', status: 'completed', duration: '2.3s' },
+                    { name: 'Test', status: 'completed', duration: '45s' },
+                    { name: 'Deploy', status: 'running', duration: '12s', progress: 65 }
+                ],
+                started: '2 minutes ago',
+                commit: 'a3f2e1b'
+            },
+            {
+                id: 2,
+                repo: 'deiverse/api',
+                branch: 'feature/auth',
+                status: 'running',
+                stages: [
+                    { name: 'Build', status: 'completed', duration: '1.8s' },
+                    { name: 'Test', status: 'running', duration: '23s', progress: 40 },
+                    { name: 'Deploy', status: 'pending' }
+                ],
+                started: '5 minutes ago',
+                commit: 'f4a3b2c'
+            },
+            {
+                id: 3,
+                repo: 'deiverse/backend',
+                branch: 'main',
+                status: 'completed',
+                stages: [
+                    { name: 'Build', status: 'completed', duration: '3.1s' },
+                    { name: 'Test', status: 'completed', duration: '52s' },
+                    { name: 'Deploy', status: 'completed', duration: '18s' }
+                ],
+                started: '8 minutes ago',
+                commit: 'b5c4d3e'
+            }
+        ];
+
+        const mockDeployments = [
+            { repo: 'deiverse/frontend', branch: 'main', status: 'success', environment: 'Production', time: '5 min ago', duration: '2m 15s', commit: 'a3f2e1b' },
+            { repo: 'deiverse/api', branch: 'staging', status: 'success', environment: 'Staging', time: '12 min ago', duration: '1m 48s', commit: 'f4a3b2c' },
+            { repo: 'deiverse/backend', branch: 'main', status: 'success', environment: 'Production', time: '18 min ago', duration: '3m 22s', commit: 'b5c4d3e' },
+            { repo: 'deiverse/frontend', branch: 'feature/new-ui', status: 'success', environment: 'Staging', time: '25 min ago', duration: '2m 05s', commit: 'c6d5e4f' },
+            { repo: 'deiverse/api', branch: 'main', status: 'failed', environment: 'Production', time: '32 min ago', duration: '1m 12s', commit: 'd7e6f5g' },
+            { repo: 'deiverse/backend', branch: 'hotfix/security', status: 'success', environment: 'Production', time: '45 min ago', duration: '2m 33s', commit: 'e8f7g6h' }
+        ];
+
+        const mockActivity = [
+            { user: 'Jide', action: 'deployed', repo: 'deiverse/frontend', branch: 'main', time: '5 min ago', type: 'deploy' },
+            { user: 'Simi', action: 'triggered pipeline', repo: 'deiverse/api', branch: 'feature/auth', time: '12 min ago', type: 'pipeline' },
+            { user: 'Adebayo', action: 'rolled back', repo: 'deiverse/api', branch: 'main', time: '32 min ago', type: 'rollback' },
+            { user: 'Jide', action: 'merged PR', repo: 'deiverse/frontend', branch: 'feature/new-ui', time: '45 min ago', type: 'merge' }
+        ];
+
+        // Render active pipelines
+        function renderPipelines() {
+            const container = document.getElementById('active-pipelines-list');
+            container.innerHTML = mockPipelines.map(pipeline => {
+                const statusClass = pipeline.status === 'running' ? 'border-indigo' : pipeline.status === 'completed' ? 'border-green-500' : 'border-gray-300';
+                return `
+                    <div class="glass-card rounded-xl p-6 border-l-4 ${statusClass}">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="font-semibold text-slate">${pipeline.repo}</div>
+                                <div class="text-sm text-steel">Branch: ${pipeline.branch} • Commit: ${pipeline.commit}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-steel">Started ${pipeline.started}</div>
+                                <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium mt-1 ${
+                                    pipeline.status === 'running' ? 'bg-indigo/10 text-indigo' :
+                                    pipeline.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                    'bg-gray-100 text-gray-800'
+                                }">
+                                    ${pipeline.status === 'running' ? '<span class="w-2 h-2 bg-indigo rounded-full pulse-dot inline-block mr-2"></span>' : ''}
+                                    ${pipeline.status}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            ${pipeline.stages.map((stage, idx) => {
+                                const stageClass = stage.status === 'completed' ? 'completed' : 
+                                                 stage.status === 'running' ? 'active' : 'pending';
+                                return `
+                                    <div class="flex-1">
+                                        <div class="pipeline-stage ${stageClass} rounded-lg p-3 text-center mb-2">
+                                            <div class="font-semibold text-sm">${stage.name}</div>
+                                            ${stage.duration ? `<div class="text-xs mt-1">${stage.duration}</div>` : ''}
+                                        </div>
+                                        ${stage.progress ? `
+                                            <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+                                                <div class="h-full bg-indigo rounded-full transition-all" style="width: ${stage.progress}%"></div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    ${idx < pipeline.stages.length - 1 ? '<div class="w-4 h-0.5 bg-gray-300"></div>' : ''}
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render deployments table
+        function renderDeployments() {
+            const tbody = document.getElementById('deployments-table');
+            tbody.innerHTML = mockDeployments.map(deploy => {
+                const statusBadge = deploy.status === 'success' 
+                    ? '<span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-medium">Success</span>'
+                    : '<span class="px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-medium">Failed</span>';
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="font-medium text-slate">${deploy.repo}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-steel">${deploy.branch}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${statusBadge}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-steel">${deploy.environment}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-steel">${deploy.time}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-steel">${deploy.duration}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <button class="text-indigo hover:text-blue-800 font-medium mr-3">View</button>
+                            ${deploy.status === 'success' ? '<button class="text-red-600 hover:text-red-800 font-medium">Rollback</button>' : '<button class="text-indigo hover:text-blue-800 font-medium">Retry</button>'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Render activity feed
+        function renderActivity() {
+            const container = document.getElementById('activity-feed');
+            container.innerHTML = mockActivity.map(activity => {
+                const icon = activity.type === 'deploy' ? '🚀' : activity.type === 'pipeline' ? '⚙️' : activity.type === 'rollback' ? '↩️' : '🔀';
+                return `
+                    <div class="flex items-start space-x-4 pb-4 border-b border-gray-100 last:border-0">
+                        <div class="text-2xl">${icon}</div>
+                        <div class="flex-1">
+                            <div class="font-medium text-slate">
+                                <span class="font-semibold">${activity.user}</span> ${activity.action} 
+                                <span class="text-indigo">${activity.repo}</span>
+                                <span class="text-steel">(${activity.branch})</span>
+                            </div>
+                            <div class="text-sm text-steel mt-1">${activity.time}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Deployment Frequency Chart
+            const deploymentCtx = document.getElementById('deployment-chart').getContext('2d');
+            new Chart(deploymentCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Deployments',
+                        data: [8, 12, 10, 15, 18, 12, 12],
+                        backgroundColor: '#0F3B8C',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0 } }
+                    }
+                }
+            });
+
+            // Build Time Chart
+            const buildTimeCtx = document.getElementById('build-time-chart').getContext('2d');
+            new Chart(buildTimeCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Avg Build Time (min)',
+                        data: [3.2, 2.8, 2.5, 2.3, 2.1, 2.3, 2.3],
+                        borderColor: '#0F3B8C',
+                        backgroundColor: 'rgba(15, 59, 140, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // Simulate real-time updates
+        function simulateUpdates() {
+            setInterval(() => {
+                // Update pipeline progress
+                const runningStages = document.querySelectorAll('.pipeline-stage.active');
+                runningStages.forEach(stage => {
+                    const progressBar = stage.closest('.flex-1').querySelector('.bg-indigo');
+                    if (progressBar) {
+                        let currentWidth = parseInt(progressBar.style.width) || 0;
+                        if (currentWidth < 100) {
+                            progressBar.style.width = (currentWidth + 5) + '%';
+                        }
+                    }
+                });
+            }, 2000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPipelines();
+            renderDeployments();
+            renderActivity();
+            initCharts();
+            simulateUpdates();
+        });
+    </script>
+</body>
+</html>
+
