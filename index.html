@@ -892,7 +892,7 @@
     </section>
 
     <!-- Developer Docs CTA -->
-    <section class="py-20 px-4 sm:px-6 lg:px-16 bg-secondary-system-background">
+    <section id="start-building-section" class="py-20 px-4 sm:px-6 lg:px-16 bg-secondary-system-background">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl sm:text-4xl font-bold text-slate mb-6">
                 Get started — connect your repo
@@ -2216,19 +2216,22 @@
         // Explore Platform button functionality
         document.getElementById('explore-platform-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            // Scroll to features section
-            const featuresSection = document.getElementById('features');
-            if (featuresSection) {
+            // Scroll to Start Building section
+            const startBuildingSection = document.getElementById('start-building-section');
+            if (startBuildingSection) {
                 const offset = 80;
-                const elementPosition = featuresSection.getBoundingClientRect().top;
+                const elementPosition = startBuildingSection.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.scrollY - offset;
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
             } else {
-                // If features section doesn't exist, navigate to features page
-                window.location.href = '/features.html';
+                // Fallback: scroll to start building button directly
+                const startBuildingBtn = document.getElementById('start-building-btn');
+                if (startBuildingBtn) {
+                    startBuildingBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
         });
 
